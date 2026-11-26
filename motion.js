@@ -41,6 +41,7 @@
       film: element.querySelector(".atmosphere-film"),
       light: element.querySelector(".atmosphere-light"),
       visible: section === hero,
+      paused: false,
       time: 0,
       lastPaint: -Infinity,
       pulse: null,
@@ -107,7 +108,7 @@
 
     let visible = false;
     for (const [section, scene] of atmospheres) {
-      if (!scene.visible || (section === curtain && lastCurtainClip === "100%"
+      if (!scene.visible || scene.paused || (section === curtain && lastCurtainClip === "100%"
         && !curtain.querySelector(".preview-note:target"))) continue;
 
       visible = true;
@@ -194,7 +195,7 @@
       scene.width = scene.element.clientWidth;
       scene.height = scene.element.clientHeight;
       scene.field?.resize();
-      scene.field?.draw(scene.time, scene.pointer, scene.pulse);
+      if (!scene.paused) scene.field?.draw(scene.time, scene.pointer, scene.pulse);
     }
     if (heroArt?.resize()) {
       const { time, pointer, pulse } = heroAtmosphere;
@@ -267,8 +268,22 @@
 
   function enableInteraction() {
     for (const [section, scene] of atmospheres) {
+      if (scene.element.hasAttribute("data-atmosphere-switchable")) {
+        scene.element.addEventListener("mosko:atmosphere-change", () => {
+          scene.paused = scene.element.hasAttribute("data-atmosphere-paused");
+          scene.pulse = null;
+          scene.pointer.strength = 0;
+          scene.target.strength = 0;
+          scene.lastPaint = -Infinity;
+          if (!scene.paused) {
+            scene.time = 0;
+            if (reduced.matches) scene.field?.draw(scene.time, scene.pointer, null);
+          }
+          frameRequest();
+        });
+      }
       section.addEventListener("pointermove", (event) => {
-        if (reduced.matches || !finePointer.matches || event.pointerType === "touch") return;
+        if (scene.paused || reduced.matches || !finePointer.matches || event.pointerType === "touch") return;
         const bounds = scene.element.getBoundingClientRect();
         scene.target.x = event.clientX - bounds.left;
         scene.target.y = event.clientY - bounds.top;
@@ -284,7 +299,7 @@
         frameRequest();
       });
       section.addEventListener("click", (event) => {
-        if (!scene.field || reduced.matches || event.button !== 0) return;
+        if (!scene.field || scene.paused || reduced.matches || event.button !== 0) return;
         if (event.target.closest("a, button, input") || !window.getSelection()?.isCollapsed) return;
         const bounds = scene.element.getBoundingClientRect();
         scene.pulse = { x: event.clientX - bounds.left, y: event.clientY - bounds.top, age: 0 };
