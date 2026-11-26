@@ -18,12 +18,18 @@
     const first = centres[0];
     const last = centres[centres.length - 1];
     const readingLine = window.innerHeight * 0.46 - timeline.getBoundingClientRect().top;
-    const position = Math.max(first, Math.min(last, readingLine));
+    const scrollPosition = Math.max(first, Math.min(last, readingLine));
+    const end = Math.max(1, centres.findIndex(centre => centre >= scrollPosition));
+    const start = end - 1;
+    const distance = centres[end] - centres[start];
+    // Reserve scroll distance at each end of the segment so the marker settles at every phase.
+    const hold = Math.min(distance * 0.18, 56);
+    const travel = Math.max(0, Math.min(1, (scrollPosition - centres[start] - hold) / (distance - 2 * hold)));
+    const eased = travel * travel * (3 - 2 * travel);
+    const position = centres[start] + distance * eased;
     timeline.style.setProperty("--process-offset", `${position - first}px`);
 
-    // A phase becomes active when its heading is the nearest to the reading line.
-    const next = centres.reduce((nearest, centre, index) =>
-      Math.abs(centre - position) < Math.abs(centres[nearest] - position) ? index : nearest, 0);
+    const next = travel < 0.5 ? start : end;
     if (next === current) return;
     steps[current]?.classList.remove("is-current");
     steps[next].classList.add("is-current");

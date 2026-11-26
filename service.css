@@ -48,6 +48,7 @@
 .experiment-heading { align-items: center; text-align: center; }
 .experiment-board {
   --experiment-size: clamp(3rem, 12vw, 8rem);
+  --experiment-height: calc(var(--experiment-size) * 235.77 / 239.93);
   --experiment-ink: var(--primary-dark-2);
   position: relative;
   display: grid;
@@ -66,23 +67,23 @@
 .experiment-panel--light { background: var(--primary-light-3); }
 .experiment-point {
   inline-size: var(--experiment-size);
-  aspect-ratio: 239.93 / 235.77;
+  block-size: var(--experiment-height);
   background: var(--experiment-ink);
   mask: var(--point-mask) center / contain no-repeat;
 }
 .experiment-board::after {
   content: "";
   position: absolute;
-  inset: 50% 25% auto;
-  block-size: calc(var(--experiment-size) * 0.23);
+  inset: calc(50% - var(--experiment-height) / 2) 25% auto;
+  block-size: var(--experiment-height);
   background: var(--experiment-ink);
   pointer-events: none;
-  transform: translateY(-50%) scaleX(0);
+  transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--transition-image) var(--ease-out);
 }
 .service-experiment:has(.experiment-reveal[open]) .experiment-board::after {
-  transform: translateY(-50%) scaleX(1);
+  transform: scaleX(1);
 }
 .experiment-reveal { justify-self: stretch; }
 .experiment-toggle {
