@@ -11,7 +11,7 @@
   const heroCanvas = document.querySelector(".hero-field");
   const signatureCanvas = document.querySelector(".signature-field");
   const heroArt = heroCanvas && window.MoskoScenes?.heroScene(heroCanvas);
-  const signatureArt = window.MoskoScenes?.signatureScene(signatureCanvas, passage);
+  const signatureArt = signatureCanvas && passage && window.MoskoScenes?.signatureScene(signatureCanvas, passage);
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const finePointer = matchMedia("(pointer: fine) and (hover: hover)");
@@ -293,7 +293,7 @@
       });
     }
 
-    passage.addEventListener("load", () => {
+    passage?.addEventListener("load", () => {
       lastSceneProgress = NaN;
       if (signatureVisible) frameRequest();
       else signatureArt?.draw(0.69);
@@ -335,7 +335,7 @@
         frameRequest();
       });
       for (const section of atmospheres.keys()) visibility.observe(section);
-      visibility.observe(signature);
+      if (signature) visibility.observe(signature);
     } else {
       for (const scene of atmospheres.values()) scene.visible = true;
       signatureVisible = true;
@@ -345,7 +345,7 @@
   }
 
   function applySignatureVariant() {
-    if (new URLSearchParams(window.location.search).get("signature") !== "a") return;
+    if (!signature || new URLSearchParams(window.location.search).get("signature") !== "a") return;
     const alternate = document.querySelector("#signature-variant-a").content;
     for (const part of ["eyebrow", "title", "line"]) {
       const selector = `[data-signature-${part}]`;

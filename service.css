@@ -1,0 +1,276 @@
+/* Variants for service pages. Shared tokens, navigation and atmosphere live in styles.css. */
+.service-page .nav-links a[aria-current="page"] {
+  text-decoration: underline var(--primary-brand-1) var(--focus-width);
+  text-underline-offset: 0.32em;
+}
+
+.hero.service-hero {
+  grid-template-rows: 1fr;
+  place-items: center;
+  padding-block: var(--size-128) var(--size-64);
+}
+.service-hero .service-hero-shade {
+  background: radial-gradient(ellipse at 50% 52%,
+    color-mix(in srgb, var(--chili-ink) 70%, transparent),
+    color-mix(in srgb, var(--chili-ink) 45%, transparent) 61%, transparent);
+}
+.service-hero-copy { align-items: center; text-align: center; }
+.service-hero h1 {
+  max-inline-size: 23ch;
+  font-size: var(--title-size-1);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.service-hero-copy .body-l { max-inline-size: 58ch; }
+.service-hero-copy .btn-solid-on-dark {
+  align-self: center;
+  margin-block-start: var(--size-8);
+  line-height: 1.2;
+}
+
+.service-editorial, .service-project-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  align-items: end;
+  gap: clamp(var(--size-24), 6vw, var(--size-96));
+}
+.service-heading { max-inline-size: 56rem; }
+.service-prose { max-inline-size: 58ch; }
+.service-emphasis { color: var(--primary-dark-1); }
+
+/* Calibrated comparison surfaces. Only the shape's alpha mask clips the flat fill. */
+.service-experiment, .service-process {
+  --focus-color: var(--primary-light-1);
+  background: var(--shadow-black);
+  color: var(--chili-cream);
+}
+.service-experiment { display: grid; justify-items: center; }
+.experiment-heading { align-items: center; text-align: center; }
+.experiment-board {
+  --experiment-size: clamp(3rem, 12vw, 8rem);
+  --experiment-ink: var(--primary-dark-2);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  inline-size: min(100%, 63rem);
+  margin-block: var(--size-48) var(--size-24);
+  overflow: clip;
+  border-radius: var(--radius-m) var(--radius-l) var(--radius-m) var(--radius-m);
+}
+.experiment-panel {
+  display: grid;
+  place-items: center;
+  min-block-size: clamp(9.5rem, 26vw, 21rem);
+}
+.experiment-panel--dark { background: var(--primary-dark-1); }
+.experiment-panel--light { background: var(--primary-light-3); }
+.experiment-point {
+  inline-size: var(--experiment-size);
+  aspect-ratio: 239.93 / 235.77;
+  background: var(--experiment-ink);
+  mask: var(--point-mask) center / contain no-repeat;
+}
+.experiment-board::after {
+  content: "";
+  position: absolute;
+  inset: 50% 25% auto;
+  block-size: calc(var(--experiment-size) * 0.23);
+  background: var(--experiment-ink);
+  pointer-events: none;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--transition-image) var(--ease-out);
+}
+.service-experiment:has(.experiment-reveal[open]) .experiment-board::after {
+  transform: translateY(-50%) scaleX(1);
+}
+.experiment-reveal { justify-self: stretch; }
+.experiment-toggle {
+  inline-size: fit-content;
+  min-block-size: var(--size-48);
+  margin-inline: auto;
+  padding: var(--size-12) var(--size-24);
+  border: var(--hairline) solid var(--light-line);
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  font-weight: 700;
+}
+.experiment-toggle, .service-faq-item summary { list-style: none; }
+.experiment-toggle::-webkit-details-marker, .service-faq-item summary::-webkit-details-marker { display: none; }
+.experiment-toggle:hover { border-color: var(--chili-cream); }
+.experiment-hide, .experiment-reveal[open] .experiment-show { display: none; }
+.experiment-reveal[open] .experiment-hide { display: inline; }
+.experiment-answer { margin-block-start: var(--size-64); }
+.experiment-values {
+  margin-block-end: var(--size-64);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.experiment-values code + span { margin-inline: var(--size-8); }
+.experiment-answer .service-editorial { align-items: start; }
+.experiment-takeaway {
+  max-inline-size: 29ch;
+  margin-block-start: var(--size-80);
+  text-wrap: balance;
+}
+.experiment-takeaway strong, .service-statement strong { font-weight: inherit; }
+
+.project-gallery {
+  display: grid;
+  gap: var(--size-80);
+  margin-block-start: var(--size-64);
+}
+.project-view { min-inline-size: 0; inline-size: 86%; }
+.project-view--offset { inline-size: 71%; justify-self: end; }
+.project-shot, .service-studio-photo {
+  display: block;
+  overflow: clip;
+  border-radius: var(--radius-m) clamp(var(--radius-l), 5vw, var(--size-80)) var(--radius-m) var(--radius-m);
+  background: var(--primary-light-3);
+}
+.project-shot img, .service-studio-photo img { inline-size: 100%; }
+.project-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--size-24);
+  row-gap: var(--size-4);
+  padding-block-start: var(--size-24);
+}
+.project-caption .text-link { margin-inline-start: auto; }
+
+.service-project-story {
+  align-items: center;
+  margin-block-start: var(--size-48);
+}
+.service-statement {
+  max-inline-size: 35ch;
+  margin-block: var(--size-64);
+  text-wrap: balance;
+}
+.service-scope {
+  align-items: start;
+  padding-block-start: var(--size-48);
+  border-block-start: var(--hairline) solid var(--dark-line);
+}
+
+.service-process {
+  background: radial-gradient(ellipse at 94% 38%,
+    color-mix(in srgb, var(--chili-ink) 53%, var(--shadow-black)), transparent 78%), var(--shadow-black);
+}
+.process-list {
+  position: relative;
+  margin-block-start: var(--size-64);
+}
+.process-list[data-tracking] { padding-inline-start: var(--size-64); }
+.process-rail { display: none; }
+.process-list[data-tracking] .process-rail {
+  display: block;
+  position: absolute;
+  inset: var(--process-top) auto auto var(--size-16);
+  inline-size: var(--focus-width);
+  block-size: var(--process-length);
+  background: var(--light-line);
+}
+.process-fill {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--process-offset);
+  background: var(--primary-brand-1);
+}
+.process-marker {
+  position: absolute;
+  inset: 0 auto auto 50%;
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-32);
+  aspect-ratio: 1;
+  transform: translate(-50%, calc(var(--process-offset) - 50%));
+  background: var(--primary-brand-1);
+  color: var(--shadow-black);
+  border-radius: var(--size-4) 40% var(--size-4) var(--size-4);
+  font-size: var(--body-size-s);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.process-steps { list-style: none; margin: 0; padding: 0; }
+.process-step {
+  display: grid;
+  grid-template-columns: var(--size-24) minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--size-20);
+  align-items: baseline;
+  padding-block: var(--size-48);
+  border-block-start: var(--hairline) solid var(--light-line);
+}
+.process-step:last-child { border-block-end: var(--hairline) solid var(--light-line); }
+.process-step-number {
+  color: var(--chili-ember);
+  font-size: var(--body-size-s);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.process-list[data-tracking] .process-step:not(.is-current) :is(h3, .body-on-dark) {
+  color: color-mix(in srgb, var(--chili-cream) 77%, var(--shadow-black));
+}
+.process-step h3 { text-wrap: initial; }
+.process-step :is(h3, .body-on-dark) {
+  transition: color var(--transition-fast) var(--ease-out);
+}
+.process-step.is-current { border-block-start-color: var(--primary-brand-1); }
+.process-step.is-current .process-step-number { opacity: 0; }
+
+.service-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(var(--size-32), 6vw, var(--size-96));
+}
+.service-faq-item { border-block-start: var(--hairline) solid var(--dark-line); }
+.service-faq-item:last-child { border-block-end: var(--hairline) solid var(--dark-line); }
+.service-faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--size-20);
+  align-items: center;
+  padding-block: var(--size-24);
+  cursor: pointer;
+}
+.service-faq-item summary::after {
+  content: "";
+  flex: none;
+  inline-size: var(--size-8);
+  aspect-ratio: 1;
+  border-right: var(--focus-width) solid currentColor;
+  border-bottom: var(--focus-width) solid currentColor;
+  rotate: 45deg;
+  margin-inline-end: var(--size-4);
+  transition: rotate var(--transition-fast) var(--ease-out);
+}
+.service-faq-item[open] summary::after { rotate: 225deg; }
+.service-faq-item summary:hover { text-decoration: underline var(--primary-brand-1); }
+.service-faq-answer { padding-block-end: var(--size-24); max-inline-size: 64ch; }
+
+.service-inquiry { position: relative; isolation: isolate; }
+.service-inquiry .service-editorial { align-items: start; }
+
+@media (max-width: 61.99rem) {
+  .service-faq, .service-project-story { grid-template-columns: minmax(0, 1fr); }
+  .service-faq-list { max-inline-size: 54rem; }
+}
+@media (max-width: 47.99rem) {
+  .hero.service-hero { padding-block: var(--size-128) var(--size-48); }
+  .service-hero h1 { font-size: clamp(2rem, 8vw, var(--title-size-1)); }
+  .service-editorial { grid-template-columns: minmax(0, 1fr); }
+  .project-view, .project-view--offset { inline-size: 100%; }
+  .project-caption { display: grid; gap: var(--size-8); }
+  .project-caption .text-link { margin-inline-start: 0; justify-self: start; }
+  .process-list[data-tracking] { padding-inline-start: var(--size-40); }
+  .process-list[data-tracking] .process-rail { inset-inline-start: var(--size-12); }
+  .process-marker { inline-size: var(--size-24); }
+  .process-step {
+    grid-template-columns: var(--size-20) minmax(0, 1fr);
+    gap: var(--size-12);
+    padding-block: var(--size-32);
+  }
+  .process-step .body-on-dark { grid-column: 2; }
+}
