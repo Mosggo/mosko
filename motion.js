@@ -177,10 +177,23 @@
     curtain.style.setProperty("--curtain-clip", clip);
   }
 
-  function fitCurtain() {
+  function fitAtmosphere(scene) {
+    scene.width = scene.element.clientWidth;
+    scene.height = scene.element.clientHeight;
+    scene.field?.resize();
+    if (!scene.paused) scene.field?.draw(scene.time, scene.pointer, scene.pulse);
+  }
+
+  function fitCurtain(forceArtwork = false) {
     const space = window.innerHeight - header.getBoundingClientRect().bottom;
     const compactFits = compactCurtain.matches && curtain.offsetHeight < space;
     root.classList.toggle("curtain-ready", !reduced.matches && (stickyCurtain.matches || compactFits));
+
+    // The sticky minimum height and changes to the contact area affect the canvas coordinates.
+    const scene = atmospheres.get(curtain);
+    if (scene && (forceArtwork || scene.width !== scene.element.clientWidth || scene.height !== scene.element.clientHeight)) {
+      fitAtmosphere(scene);
+    }
     previousScroll = NaN;
     lastCurtainClip = "";
     frameRequest();
@@ -202,11 +215,8 @@
   }
 
   function fitArtwork() {
-    for (const scene of atmospheres.values()) {
-      scene.width = scene.element.clientWidth;
-      scene.height = scene.element.clientHeight;
-      scene.field?.resize();
-      if (!scene.paused) scene.field?.draw(scene.time, scene.pointer, scene.pulse);
+    for (const [section, scene] of atmospheres) {
+      if (section !== curtain) fitAtmosphere(scene);
     }
     if (heroArt?.resize()) {
       const { time, pointer, pulse } = heroAtmosphere;
@@ -217,7 +227,7 @@
     if (signatureVisible) updateSignature();
     else signatureArt?.draw(0.69);
     curtainOverlap = parseFloat(getComputedStyle(main).borderBottomLeftRadius) || 0;
-    fitCurtain();
+    fitCurtain(true);
   }
 
   function syncPreferences() {
@@ -336,7 +346,7 @@
     }
     window.addEventListener("scroll", frameRequest, { passive: true });
     window.addEventListener("resize", fitArtwork, { passive: true });
-    if ("ResizeObserver" in window) new ResizeObserver(fitCurtain).observe(curtain);
+    if ("ResizeObserver" in window) new ResizeObserver(() => fitCurtain()).observe(curtain);
 
     curtain.addEventListener("focusin", (event) => {
       if (!event.target.matches(":focus-visible") || !root.classList.contains("curtain-ready")) return;
