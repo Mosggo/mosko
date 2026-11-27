@@ -421,7 +421,7 @@ main {
   background: radial-gradient(ellipse at 81% 42%, color-mix(in srgb, var(--chili-glow) 77%, var(--chili-shadow)), transparent 65%),
     linear-gradient(125deg, var(--chili-ink) 9%, var(--chili-red) 75%, var(--chili-light));
 }
-:is(.human, .service-inquiry) .atmosphere--light {
+:is(.human, .service-inquiry, [data-light-field]) .atmosphere--light {
   --atmosphere-ink: var(--chili-red);
   --atmosphere-flare: color-mix(in srgb, var(--primary-brand-1) 12%, transparent);
   --atmosphere-grain-opacity: 0.14;
@@ -461,7 +461,7 @@ main {
   inline-size: 100%;
   block-size: 100%;
 }
-:is(.human, .service-inquiry) .atmosphere--light .atmosphere-field {
+:is(.human, .service-inquiry, [data-light-field]) .atmosphere--light .atmosphere-field {
   font-size: var(--atmosphere-field-size);
   opacity: 0.92;
 }

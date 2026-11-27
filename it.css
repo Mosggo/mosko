@@ -486,12 +486,15 @@
 .it-game-result[data-result="perfect"] h3 { color: var(--chili-ember); }
 .it-game-result [data-tier] h3, .it-signoff h2 { text-transform: uppercase; }
 .it-signoff {
+  position: relative;
+  isolation: isolate;
   display: grid;
   justify-items: center;
   gap: var(--size-24);
   text-align: center;
   background: radial-gradient(ellipse at 78% 64%, var(--chili-cream), transparent 75%), var(--primary-light-2);
 }
+.it-signoff > :not(.atmosphere) { position: relative; z-index: 1; }
 .it-signoff h2 {
   font-size: clamp(2.75rem, 10vw, 10rem);
   line-height: .95;

@@ -10,9 +10,9 @@
   <link rel="icon" href="../assets/img/mosko-signet.svg" type="image/svg+xml">
   <link rel="preload" href="../assets/fonts/stack-sans-headline.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../assets/fonts/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="../styles.css?v=mobile-curtain">
+  <link rel="stylesheet" href="../styles.css?v=about-field">
   <link rel="stylesheet" href="../service.css">
-  <link rel="stylesheet" href="../it.css?v=it-mobile">
+  <link rel="stylesheet" href="../it.css?v=about-field">
   <script src="../scenes.js" defer></script>
   <script src="../motion.js?v=mobile-curtain" defer></script>
   <script src="../language.js" defer></script>
@@ -34,7 +34,7 @@
       <ul class="nav-links">
         <li><a href="../webdesign/" data-wp-path="/webdesign/">Webdesign</a></li>
         <li><a href="./" aria-current="page" data-wp-path="/it/">IT</a></li>
-        <li><a href="../#ueber-mich" data-wp-path="/ueber-mich/">Über mich</a></li>
+        <li><a href="../about/" data-wp-path="/about/">About</a></li>
       </ul>
       <ul class="nav-links nav-actions">
         <li class="nav-download-item">
@@ -42,7 +42,7 @@
             <span class="download-icon" aria-hidden="true"></span><span>Fernwartung</span>
           </a>
         </li>
-        <li><a class="nav-contact" href="#kontakt" data-wp-path="/ueber-mich/#kontakt">Kontakt <span class="arrow arrow-ne" aria-hidden="true"></span></a></li>
+        <li><a class="nav-contact" href="#kontakt" data-wp-path="/kontakt/">Kontakt <span class="arrow arrow-ne" aria-hidden="true"></span></a></li>
       </ul>
     </nav>
   </header>
@@ -400,7 +400,12 @@
       </div>
     </section>
 
-    <section class="it-signoff boxed-l pad-tb-160" aria-labelledby="it-signoff-title">
+    <section class="it-signoff boxed-l pad-tb-160" data-light-field aria-labelledby="it-signoff-title">
+      <div class="atmosphere atmosphere--light" aria-hidden="true">
+        <div class="atmosphere-light"></div>
+        <div class="atmosphere-grain"></div>
+        <canvas class="atmosphere-field"></canvas>
+      </div>
       <p class="sub-title subtitle-on-light" lang="en">Make It Simple.</p>
       <h2 class="title-1 heading-on-light" id="it-signoff-title" lang="en">Digital on Point.</h2>
     </section>
