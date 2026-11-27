@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f2ef">
+  <meta http-equiv="Content-Security-Policy" content="form-action 'none'">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Kontakt – Schreib MOSKO. | Webdesign und IT</title>
+  <meta name="description" content="Nimm Kontakt mit Cheyenne von MOSKO. auf. Schreib für Webdesign oder IT per E-Mail, Formular oder WhatsApp. Persönliche Termine nach Vereinbarung.">
+  <link rel="icon" href="../assets/img/mosko-signet.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/stack-sans-headline.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="../assets/fonts/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=about-field">
+  <link rel="stylesheet" href="../contact.css">
+  <script src="../scenes.js?v=contact-hello" defer></script>
+  <script src="../motion.js?v=curtain-size" defer></script>
+  <script src="../language.js" defer></script>
+  <script src="../contact.js" defer></script>
+</head>
+<body class="contact-page" id="start" data-native-scroll>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <!-- data-wp-path dokumentiert das jeweilige Ziel für die spätere WordPress-Navigation. -->
+  <header class="site-header">
+    <nav class="nav-pill" aria-label="Hauptnavigation">
+      <a class="nav-logo" href="../" aria-label="MOSKO. – Startseite" data-wp-path="/">
+        <picture>
+          <source media="(max-width: 26rem)" srcset="../assets/img/mosko-signet-kontrast.svg" width="1500" height="1032">
+          <img src="../assets/img/mosko-kontrast.svg" width="1500" height="288" alt="">
+        </picture>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../webdesign/" data-wp-path="/webdesign/">Webdesign</a></li>
+        <li><a href="../it/" data-wp-path="/it/">IT</a></li>
+        <li><a href="../about/" data-wp-path="/about/">About</a></li>
+      </ul>
+      <ul class="nav-links nav-actions">
+        <li class="nav-download-item">
+          <a class="nav-download" href="../it/#fernwartung" aria-label="Fernwartung" data-wp-path="/it/#fernwartung">
+            <span class="download-icon" aria-hidden="true"></span><span>Fernwartung</span>
+          </a>
+        </li>
+        <li><a class="nav-contact" href="./" aria-current="page" data-wp-path="/kontakt/">Kontakt <span class="arrow arrow-ne" aria-hidden="true"></span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="inhalt" tabindex="-1">
+    <section class="contact-hero boxed-l bg-light-2" data-light-field aria-labelledby="contact-hero-title">
+      <div class="atmosphere atmosphere--light" aria-hidden="true">
+        <div class="atmosphere-light"></div>
+        <div class="atmosphere-grain"></div>
+        <canvas class="atmosphere-field" data-atmosphere-motif="hello"></canvas>
+      </div>
+      <div class="contact-hero-copy flex-column gap-20" data-atmosphere-quiet>
+        <p class="sub-title subtitle-on-light" lang="en">Let's Connect.</p>
+        <h1 class="title-2 heading-on-light" id="contact-hero-title">Alles beginnt mit einem guten Gespräch.</h1>
+        <p class="body-l body-on-light">Ob du bereits konkrete Vorstellungen hast, noch ganz am Anfang stehst oder einfach eine Frage hast – ich freue mich, von dir zu hören.</p>
+      </div>
+    </section>
+
+    <section class="contact-message boxed-l pad-tb-64 bg-light-1" id="nachricht" aria-labelledby="contact-message-title">
+      <header class="contact-heading flex-column gap-16">
+        <p class="sub-title subtitle-on-light" lang="en">Write Me.</p>
+        <h2 class="title-3 heading-on-light" id="contact-message-title">Ich freue mich auf deine Nachricht.</h2>
+        <p class="body-m body-on-light">Schreib mir am besten kurz, worum es geht. Ich melde mich bei dir, damit wir alles Weitere persönlich besprechen können.</p>
+      </header>
+
+      <form class="contact-form" data-contact-form method="post" novalidate aria-labelledby="contact-message-title" aria-describedby="contact-preview">
+        <p class="contact-preview body-s body-on-light" id="contact-preview">Das Formular erstellt einen E-Mail-Entwurf. Du sendest ihn anschliessend in deinem E-Mail-Programm ab.</p>
+        <fieldset class="contact-fields" disabled aria-label="Deine Nachricht">
+          <div class="contact-field">
+            <label for="contact-name">Name <span aria-hidden="true">*</span></label>
+            <input id="contact-name" name="name" autocomplete="name" maxlength="120" data-required-message="Bitte gib deinen Namen ein." required>
+            <p class="contact-error body-s" id="contact-name-error" data-field-error hidden></p>
+          </div>
+          <div class="contact-field">
+            <label for="contact-email">E-Mail-Adresse <span aria-hidden="true">*</span></label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254"
+              data-required-message="Bitte gib deine E-Mail-Adresse ein."
+              data-format-message="Bitte prüfe deine E-Mail-Adresse. Beispiel: name@beispiel.ch." required>
+            <p class="contact-error body-s" id="contact-email-error" data-field-error hidden></p>
+          </div>
+          <div class="contact-field">
+            <label for="contact-phone">Telefonnummer</label>
+            <input id="contact-phone" name="phone" type="tel" autocomplete="tel" maxlength="60">
+          </div>
+          <div class="contact-field contact-field-message">
+            <label for="contact-message">Nachricht <span aria-hidden="true">*</span></label>
+            <textarea id="contact-message" name="message" rows="5" maxlength="3000"
+              data-required-message="Bitte schreibe eine kurze Nachricht." required></textarea>
+            <p class="contact-error body-s" id="contact-message-error" data-field-error hidden></p>
+          </div>
+          <button type="submit" class="contact-submit">Absenden <span class="arrow arrow-ne" aria-hidden="true"></span></button>
+        </fieldset>
+        <div class="contact-status body-m" role="status">
+          <div class="contact-draft" data-contact-draft hidden>
+            <p>Dein Entwurf ist bereit. Öffne ihn und sende ihn in deinem E-Mail-Programm ab.</p>
+            <a class="text-link link-on-light" data-draft-link>E-Mail-Entwurf öffnen <span class="arrow arrow-ne" aria-hidden="true"></span></a>
+          </div>
+        </div>
+        <noscript><p class="body-s body-on-light">Für den Entwurf braucht das Formular JavaScript. Du erreichst mich direkt unter <a href="mailto:info@mosko.ch">info@mosko.ch</a>.</p></noscript>
+      </form>
+    </section>
+
+    <div class="contact-context boxed-l pad-tb-64 bg-light-2">
+      <section aria-labelledby="contact-direct-title">
+        <header class="contact-heading flex-column gap-16">
+          <p class="sub-title subtitle-on-light" lang="en">Direct Ways.</p>
+          <h2 class="title-3 heading-on-light" id="contact-direct-title">Lieber direkt?</h2>
+        </header>
+        <dl class="contact-channels">
+          <div>
+            <dt>E-Mail</dt>
+            <dd><a class="text-link link-on-light" href="mailto:info@mosko.ch">info@mosko.ch</a></dd>
+          </div>
+          <div>
+            <dt>WhatsApp</dt>
+            <dd><a class="text-link link-on-light" href="https://wa.me/41792726472" rel="noreferrer">Nachricht schreiben <span class="arrow arrow-ne" aria-hidden="true"></span></a></dd>
+          </div>
+          <div class="contact-channel-phone">
+            <dt>Telefon</dt>
+            <dd><a href="tel:+41792726472">+41 79 272 64 72</a></dd>
+          </div>
+        </dl>
+      </section>
+      <section class="contact-in-person flex-column gap-16 body-m body-on-light" aria-labelledby="contact-in-person-title">
+        <p class="sub-title subtitle-on-light" lang="en">In Person.</p>
+        <h2 class="title-4 heading-on-light" id="contact-in-person-title">Ich komme gerne zu dir.</h2>
+        <p>Ob Webdesign oder IT – ich lerne dein Unternehmen am liebsten dort kennen, wo der Alltag stattfindet.</p>
+        <p>Persönliche Termine vereinbaren wir individuell. Und wenn uns ein paar Kilometer zu viel voneinander trennen, geht es natürlich auch digital.</p>
+      </section>
+    </div>
+  </main>
+
+  <div id="kontakt" class="footer-anchor" aria-hidden="true"></div>
+  <footer class="curtain boxed-l" aria-labelledby="footer-title">
+    <div class="atmosphere atmosphere--chili" aria-hidden="true">
+      <div class="atmosphere-film"></div>
+      <div class="atmosphere-light"></div>
+      <div class="curtain-shade"></div>
+      <div class="atmosphere-grain"></div>
+      <canvas class="atmosphere-field"></canvas>
+    </div>
+    <div class="curtain-identity">
+      <div class="curtain-brand flex-column gap-16">
+        <a class="curtain-logo" href="../" data-wp-path="/" aria-label="MOSKO. Digital on Point. Zur Startseite">
+          <img src="../assets/img/mosko-claim-leinen.svg" width="1500" height="388" alt="MOSKO. Digital on Point.">
+        </a>
+        <p class="body-m">In Graubünden zuhause. Digital überall.</p>
+      </div>
+      <div class="curtain-reach flex-column gap-16">
+        <h2 class="title-6 heading-on-dark" id="footer-title">Bereit, wenn du es bist.</h2>
+        <div class="curtain-channels">
+          <address class="curtain-contact body-m">
+            <a href="tel:+41792726472">+41 79 272 64 72</a>
+            <a href="mailto:info@mosko.ch">info@mosko.ch</a>
+          </address>
+          <div class="curtain-socials">
+            <span class="curtain-social-icon" data-social-profile="instagram" role="img" aria-label="Instagram – Profil-URL folgt" title="Instagram-Profil folgt">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.2" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span class="curtain-social-icon" data-social-profile="linkedin" role="img" aria-label="LinkedIn – Profil-URL folgt" title="LinkedIn-Profil folgt">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="3"/>
+                <path d="M8 10.5v6m3.75 0v-6m0 2.1a2.4 2.4 0 0 1 4.8 0v3.9" stroke-linecap="round"/>
+                <circle cx="8" cy="7.6" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="curtain-base body-s">
+      <p class="curtain-language-status" lang="en" role="status" data-language-status hidden></p>
+      <div class="curtain-legal">
+        <p>© 2026 MOSKO.</p>
+        <nav class="curtain-links" aria-label="Rechtliche Informationen">
+          <a href="#impressum-vorschau" data-wp-path="/impressum/">Impressum</a>
+          <a href="#datenschutz-vorschau" data-wp-path="/datenschutz/">Datenschutz</a>
+        </nav>
+      </div>
+      <div class="curtain-language" role="group" aria-label="Sprache" data-language-picker hidden>
+        <button type="button" lang="de-CH" aria-label="Deutsch" aria-pressed="false" data-language="de">DE</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" lang="en" aria-label="English" aria-pressed="false" data-language="en">EN</button>
+      </div>
+    </div>
+    <p class="preview-note body-s" id="impressum-vorschau" tabindex="-1">Das Impressum folgt als eigene Seite. <a href="#kontakt">Hinweis schliessen</a></p>
+    <p class="preview-note body-s" id="datenschutz-vorschau" tabindex="-1">Die Datenschutzerklärung folgt als eigene Seite. <a href="#kontakt">Hinweis schliessen</a></p>
+  </footer>
+</body>
+</html>

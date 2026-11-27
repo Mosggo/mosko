@@ -106,12 +106,37 @@
     return field;
   }
 
+  const helloMotif = [
+    "11011 11111 11000 11000 01110",
+    "11011 11000 11000 11000 11011",
+    "11011 11000 11000 11000 11011",
+    "11111 11110 11000 11000 11011",
+    "11011 11000 11000 11000 11011",
+    "11011 11000 11000 11000 11011",
+    "11011 11111 11111 11111 01110",
+  ];
+
+  function markHello(cells, width, height) {
+    const columns = helloMotif[0].length;
+    const unit = Math.min(width / (width < 768 ? 34 : 47), height / 11.2);
+    const wordWidth = columns * unit;
+    const center = width < 768 ? width * .52 : Math.min(width * .69, width - wordWidth * .54);
+    const left = center - wordWidth / 2;
+    const top = height * .61 - helloMotif.length * unit / 2;
+    for (const cell of cells) {
+      const column = Math.floor((cell.x - left) / unit);
+      const row = Math.floor((cell.y - top) / unit);
+      cell.motif = helloMotif[row]?.[column] === "1";
+    }
+  }
+
   function atmosphereScene(canvas) {
     if (!canvas) return null;
     const surface = canvasSurface(canvas);
     if (!surface) return null;
     const { ctx } = surface;
     const foreground = canvas.closest(".atmosphere")?.parentElement?.querySelectorAll("[data-atmosphere-quiet]");
+    const hasHello = canvas.dataset.atmosphereMotif === "hello";
     let cells = [];
     let reach;
     let ink;
@@ -128,6 +153,7 @@
       const number = (key) => parseFloat(style.getPropertyValue(key));
       const spacing = number("--atmosphere-field-spacing") || 1;
       cells = makeField(width, height, spacing);
+      if (hasHello) markHello(cells, width, height);
       reach = clamp(Math.min(width, height) * 0.48, 125, 420);
       ink = style.getPropertyValue("--atmosphere-ink").trim();
       gain = number("--atmosphere-field-gain") || 1;
@@ -171,18 +197,20 @@
       ctx.fillStyle = ink;
 
       for (const cell of cells) {
-        const { x, y, idle, tone, phase, visibility = 1 } = cell;
+        const { x, y, idle, tone, phase, visibility = 1, motif } = cell;
         const energy = signal(x, y);
-        if (idle && energy < 0.15) continue;
+        if (idle && !motif && energy < 0.15) continue;
         const touch = pointerWeight(pointer, x, y, reach);
         const drift = 0.5 + 0.5 * Math.sin(seconds * 0.62 + x * 0.003 - y * 0.005 + phase);
         const opacity = (idle ? 0 : 0.038 + tone * 0.11 + drift * 0.036 + touch * (0.065 + motion * 0.10)) + energy * 0.32;
-        ctx.globalAlpha = clamp(opacity * gain) * visibility;
+        const motifAlpha = motif ? 0.12 + tone * 0.095 : 0;
+        const ambient = hasHello && !motif ? opacity * .55 : opacity;
+        ctx.globalAlpha = clamp((ambient + motifAlpha) * gain) * visibility;
         const nx = x + touch * Math.cos(phase) * (1.6 + motion * 3.4) + energy * Math.sin(phase) * 4
           + motion * Math.sin(seconds * 0.7 + phase) * 1.8;
         const ny = y + touch * Math.sin(phase) * (1.3 + motion * 2.7) - energy * 2
           + motion * Math.cos(seconds * 0.63 + phase) * 1.6;
-        if (tone > 1 - glyphShare || energy > 0.21) {
+        if (motif || tone > 1 - glyphShare || energy > 0.21) {
           const change = Math.floor(touch * motion * 4);
           ctx.fillText(bits[(Math.floor(tone * 19) + Math.floor(energy * 6) + change) % bits.length], nx, ny);
         } else {
