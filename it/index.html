@@ -16,6 +16,7 @@
   <script src="../scenes.js" defer></script>
   <script src="../motion.js" defer></script>
   <script src="../language.js" defer></script>
+  <script src="../it-challenge-data.js" defer></script>
   <script src="../it.js" defer></script>
 </head>
 <body class="service-page it-page" id="start" data-native-scroll>
@@ -115,90 +116,74 @@
       </div>
     </section>
 
-    <section class="it-check boxed-l bg-light-2 pad-tb-128" id="passwortcheck" aria-labelledby="it-check-title">
+    <section class="it-check boxed-l bg-light-2 pad-tb-80" id="passwortcheck" aria-labelledby="it-check-title">
+      <span id="passwortgenerator" class="it-password-anchor" aria-hidden="true"></span>
       <div class="it-split it-check-grid">
         <div class="it-prose flex-column gap-20">
           <p class="sub-title subtitle-on-light" lang="en">Dear Hasi.</p>
           <h2 class="title-2 heading-on-light" id="it-check-title">Falls dein Passwort <span class="it-hasi">hasi1234</span> lautet, sollten wir kurz reden.</h2>
-          <p class="body-l body-on-light">Manche Passwörter sind längst nicht mehr so geheim, wie wir denken.</p>
-          <p class="body-l body-on-light">Auch ein Passwort, das auf den ersten Blick ziemlich sicher aussieht, kann bereits in einem bekannten Datenleck aufgetaucht sein.</p>
+          <aside class="it-sentence-tip body-m body-on-light" aria-labelledby="it-tip-title">
+            <h3 class="title-6 heading-on-light" id="it-tip-title">Ein Satz kann helfen.</h3>
+            <p class="it-sentence-example"><span>Z</span>wischen <span>7</span> <span>U</span>hr <span>u</span>nd <span>d</span>em <span>e</span>rsten <span>K</span>affee <span>b</span>in <span>i</span>ch <span>n</span>ur <span>b</span>edingt <span>e</span>insatzfähig<span>!</span></p>
+            <details class="it-sentence-fold">
+              <summary>Zeichenfolge anzeigen</summary>
+              <p class="it-sentence-code"><strong>Z7UudeKbinbe!</strong></p>
+            </details>
+            <p>Denk dir deinen eigenen Satz aus. Diesen kennen jetzt alle. =)</p>
+            <p>Ein selbst ausgedachter Satz ergibt noch kein sicheres Passwort. Mehrere zufällig gewählte Wörter machen es länger und weniger vorhersehbar.</p>
+          </aside>
         </div>
+
         <div class="it-check-card it-dark">
-          <h3 class="title-5 heading-on-dark">Schon mal nachgeschaut?</h3>
-          <iframe src="passwortcheck/" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Isolierter Passwortchecker" height="254" data-password-frame></iframe>
-        </div>
-      </div>
-      <aside class="it-privacy body-s body-on-light flex-column gap-12" aria-labelledby="it-privacy-title">
-        <h3 class="title-6 heading-on-light" id="it-privacy-title">Dein Passwort bleibt dein Geheimnis.</h3>
-        <p>Dein vollständiges Passwort wird weder übertragen noch von diesem Tool gespeichert. Die Prüfung erfolgt in deinem Browser.</p>
-        <p>Für die Abfrage bei Have I Been Pwned werden lediglich die ersten fünf Zeichen des digitalen Fingerabdrucks deines Passworts übermittelt. Dabei entsteht eine Verbindung zum externen Dienst.</p>
-        <p>Verwende vorzugsweise eine Passwortidee statt deiner bestehenden Zugangsdaten.</p>
-        <p><a class="it-plain-link" href="https://haveibeenpwned.com/Passwords" rel="noreferrer" lang="en">Powered by Have I Been Pwned.</a></p>
-      </aside>
-    </section>
-
-    <section class="it-sentence boxed-l pad-tb-96" aria-labelledby="it-sentence-title">
-      <div class="it-split">
-        <div class="it-prose flex-column gap-20">
-          <p class="sub-title subtitle-on-light" lang="en">Make It Simple.</p>
-          <h2 class="title-2 heading-on-light" id="it-sentence-title">Ein Satz kann helfen.</h2>
-          <p class="body-l body-on-light">Ein Passwort muss nicht zwangsläufig schwer zu merken sein.</p>
-          <p class="body-l body-on-light">Denk dir einen möglichst ungewöhnlichen Satz aus, den du dir gut merken kannst.</p>
-        </div>
-        <div class="it-sentence-paper body-m body-on-light flex-column gap-20">
-          <p>Zum Beispiel:</p>
-          <p class="it-sentence-example"><strong><span>Z</span>wischen <span>7</span> <span>U</span>hr <span>u</span>nd <span>d</span>em <span>e</span>rsten <span>K</span>affee <span>b</span>in <span>i</span>ch <span>n</span>ur <span>b</span>edingt <span>e</span>insatzfähig<span>!</span></strong></p>
-          <details class="it-sentence-fold">
-            <summary>Zeichenfolge anzeigen</summary>
-            <p>Aus den Anfangsbuchstaben, Zahlen und Satzzeichen wird:</p>
-            <p class="it-sentence-code"><strong>Z7UudeKbinbe!</strong></p>
-          </details>
-        </div>
-      </div>
-      <div class="it-sentence-lesson body-m body-on-light flex-column gap-16">
-        <p>Natürlich solltest du dir deinen eigenen Satz ausdenken. Dieses Passwort kennen jetzt nämlich alle. =)</p>
-        <p>Je länger und individueller dein Passwort ist, desto besser. Auch mehrere zufällig gewählte Wörter können eine gute Möglichkeit sein.</p>
-      </div>
-    </section>
-
-    <section class="it-generate it-dark boxed-l pad-tb-128" id="passwortgenerator" aria-labelledby="it-generate-title">
-      <div class="it-split">
-        <div class="it-prose flex-column gap-20">
-          <p class="sub-title subtitle-on-dark" lang="en">Let's Make It Random.</p>
-          <h2 class="title-2 heading-on-dark" id="it-generate-title">Keine Lust auf einen Satz?</h2>
-          <p class="body-l body-on-dark">Dann lassen wir den Zufall entscheiden.</p>
-        </div>
-        <div class="it-password-tool" data-password-generator hidden>
-          <p class="it-tool-caption body-s" id="generated-label">Dein neues Passwort</p>
-          <output class="it-generated" aria-labelledby="generated-label" aria-live="off"></output>
-          <div class="it-length">
-            <label for="it-password-length">Passwortlänge</label>
-            <output for="it-password-length" data-length-value>16</output>
-            <input id="it-password-length" type="range" min="12" max="64" value="16" autocomplete="off">
+          <nav class="it-password-switch" aria-label="Passwortwerkzeuge" data-password-switch>
+            <a href="#passwortcheck" aria-current="location" aria-controls="passwort-pruefen">Passwort prüfen</a>
+            <a href="#passwortgenerator" aria-controls="passwort-erstellen">Passwort generieren</a>
+          </nav>
+          <div class="it-password-panel" id="passwort-pruefen">
+            <div class="it-privacy body-s body-on-dark">
+              <p>Bei der Prüfung gehen nur die ersten fünf Zeichen des lokal berechneten Passwort-Hashs an Have I Been Pwned. Verwende eine Passwortidee statt deiner aktuellen Zugangsdaten.</p>
+              <details>
+                <summary>Datenschutz zur Passwortprüfung</summary>
+                <p><strong>Dein Passwort bleibt dein Geheimnis.</strong> Dein vollständiges Passwort und der vollständige Hash bleiben in deinem Browser. Das Tool speichert sie nicht. Bei der HTTPS-Abfrage erhält der externe Dienst technische Metadaten wie die IP-Adresse.</p>
+                <p><a class="it-plain-link" href="https://haveibeenpwned.com/Passwords" rel="noreferrer" lang="en">Powered by Have I Been Pwned.</a></p>
+              </details>
+            </div>
+            <iframe src="passwortcheck/" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Isolierter Passwortchecker" height="88" data-password-frame></iframe>
           </div>
-          <fieldset class="it-charsets">
-            <legend>Zeichenauswahl</legend>
-            <label><input type="checkbox" data-charset="upper" checked>Grossbuchstaben</label>
-            <label><input type="checkbox" data-charset="lower" checked>Kleinbuchstaben</label>
-            <label><input type="checkbox" data-charset="digits" checked>Zahlen</label>
-            <label><input type="checkbox" data-charset="symbols" checked>Sonderzeichen</label>
-          </fieldset>
-          <div class="it-tool-actions">
-            <button type="button" class="it-tool-button" data-generate>Generieren</button>
-            <button type="button" class="it-tool-button it-tool-button--quiet" data-copy>Kopieren</button>
+          <div class="it-password-panel" id="passwort-erstellen">
+            <div class="it-password-tool" data-password-generator hidden>
+              <p class="it-tool-caption body-s" id="generated-label">Dein neues Passwort</p>
+              <output class="it-generated" aria-labelledby="generated-label" aria-live="off"></output>
+              <div class="it-length">
+                <label for="it-password-length">Passwortlänge</label>
+                <output for="it-password-length" data-length-value>16</output>
+                <input id="it-password-length" type="range" min="12" max="64" value="16" autocomplete="off">
+              </div>
+              <fieldset class="it-charsets">
+                <legend>Zeichenauswahl</legend>
+                <label><input type="checkbox" data-charset="upper" checked>Grossbuchstaben</label>
+                <label><input type="checkbox" data-charset="lower" checked>Kleinbuchstaben</label>
+                <label><input type="checkbox" data-charset="digits" checked>Zahlen</label>
+                <label><input type="checkbox" data-charset="symbols" checked>Sonderzeichen</label>
+              </fieldset>
+              <div class="it-tool-actions">
+                <button type="button" class="it-tool-button" data-generate>Generieren</button>
+                <button type="button" class="it-tool-button it-tool-button--quiet" data-copy>Kopieren</button>
+              </div>
+              <p class="it-tool-status body-s" data-generator-status role="status"></p>
+              <template data-generator-message="created">Neues Passwort erstellt.</template>
+              <template data-generator-message="copied">Passwort kopiert.</template>
+              <template data-generator-message="failed">Kopieren war nicht möglich. Du kannst das Passwort markieren und manuell kopieren.</template>
+              <template data-generator-message="minimum">Wähle mindestens eine Zeichenkategorie.</template>
+            </div>
+            <p class="body-m it-fallback" data-generator-unavailable hidden>Die sichere Zufallsquelle ist in diesem Browser nicht verfügbar.</p>
+            <noscript><p class="body-m it-fallback">Der Passwortgenerator benötigt JavaScript.</p></noscript>
+            <div class="it-generator-notes body-s body-on-dark">
+              <p>Dein Passwort wird lokal in deinem Browser erstellt und von diesem Tool nicht gespeichert.</p>
+              <p>Verwende für jedes Konto ein eigenes Passwort und aktiviere nach Möglichkeit Mehrfaktor-Authentifizierung.</p>
+            </div>
           </div>
-          <p class="it-tool-status body-s" data-generator-status role="status"></p>
-          <template data-generator-message="created">Neues Passwort erstellt.</template>
-          <template data-generator-message="copied">Passwort kopiert.</template>
-          <template data-generator-message="failed">Kopieren war nicht möglich. Du kannst das Passwort markieren und manuell kopieren.</template>
-          <template data-generator-message="minimum">Wähle mindestens eine Zeichenkategorie.</template>
         </div>
-        <p class="body-m it-fallback" data-generator-unavailable hidden>Die sichere Zufallsquelle ist in diesem Browser nicht verfügbar.</p>
-        <noscript><p class="body-m it-fallback">Der Passwortgenerator benötigt JavaScript.</p></noscript>
-      </div>
-      <div class="it-generator-notes body-m body-on-dark flex-column gap-16">
-        <p>Dein Passwort wird lokal in deinem Browser erstellt und von diesem Tool nicht gespeichert.</p>
-        <p>Ein Passwortmanager hilft dir dabei, für jedes Konto ein eigenes Passwort zu verwenden. Aktiviere zusätzlich die Mehrfaktor-Authentifizierung, wo immer sie verfügbar ist.</p>
       </div>
     </section>
 
@@ -207,10 +192,21 @@
         <p class="sub-title subtitle-on-light" lang="en">Better Safe.</p>
         <h2 class="title-2 heading-on-light" id="it-safety-title">Drei Dinge, die jedes Unternehmen im Griff haben sollte.</h2>
       </header>
-      <div class="it-pillars" data-it-scene>
+      <div class="it-pillars">
         <article class="it-pillar-chapter">
-          <div class="it-pillar-art it-pillar-art--wall" aria-hidden="true">
-            <div class="it-pillar-form"><span></span><span></span><span></span></div>
+          <div class="it-pillar-art">
+            <svg class="it-diagram" viewBox="0 0 360 188" role="img" aria-label="Eine erlaubte Verbindung läuft zwischen lokalem Netz und Internet. Eine ausgehende Anfrage endet an der Firewall.">
+              <g class="it-diagram-device">
+                <rect x="24" y="45" width="69" height="46" rx="5"/><path d="M58 91v12m-17 0h34"/>
+                <rect x="163" y="38" width="34" height="109" rx="5"/><path d="M163 58h34m-34 24h34m-34 24h34m-34 24h34m-19-72v24m7 0v24m-7 0v24"/>
+                <circle cx="301" cy="69" r="25"/><ellipse cx="301" cy="69" rx="10" ry="25"/><path d="M276 69h50"/>
+              </g>
+              <path class="it-diagram-ok" d="M95 69h181m-140-5 6 5-6 5m104-10-6 5 6 5"/>
+              <path class="it-diagram-accent" d="M58 108v15h89m-7-5 6 5-6 5m10-10 10 10m0-10-10 10"/>
+              <text x="58" y="169" text-anchor="middle">Lokales Netz</text><text x="180" y="169" text-anchor="middle">Firewall</text><text x="301" y="169" text-anchor="middle">Internet</text>
+              <text class="it-diagram-note" x="220" y="57">Erlaubt</text>
+              <text class="it-diagram-note" x="232" y="117">Ausgehend</text><text class="it-diagram-note" x="232" y="135">blockiert</text>
+            </svg>
           </div>
           <div class="it-pillar-copy body-l body-on-light flex-column gap-16">
             <h3 class="title-4 heading-on-light">Firewall.</h3>
@@ -218,8 +214,17 @@
           </div>
         </article>
         <article class="it-pillar-chapter">
-          <div class="it-pillar-art it-pillar-art--guard" aria-hidden="true">
-            <div class="it-pillar-form"><span></span><span></span><span></span></div>
+          <div class="it-pillar-art">
+            <svg class="it-diagram" viewBox="0 0 360 188" role="img" aria-label="Der Virenschutz erkennt auf einem Computer eine verdächtige Datei und verschiebt sie in Quarantäne.">
+              <g class="it-diagram-device">
+                <rect x="30" y="35" width="142" height="109" rx="8"/><path d="M30 120h142m-71 24v13m-38 0h76"/>
+                <path d="M72 55h31l18 18v36H72zm31 0v18h18M81 86h25m-25 9h19"/>
+                <rect x="225" y="44" width="105" height="100" rx="8" stroke-dasharray="4 5"/>
+                <path d="M261 63h22l13 13v37h-35zm22 0v13h13"/>
+              </g>
+              <path class="it-diagram-accent" d="M58 84h79m38 0h61m-7-5 7 5-7 5m41 3 10 10m0-10-10 10"/>
+              <text x="101" y="176" text-anchor="middle">Datei erkannt</text><text x="278" y="176" text-anchor="middle">Quarantäne</text>
+            </svg>
           </div>
           <div class="it-pillar-copy body-l body-on-light flex-column gap-16">
             <h3 class="title-4 heading-on-light">Virenschutz.</h3>
@@ -228,8 +233,19 @@
           </div>
         </article>
         <article class="it-pillar-chapter">
-          <div class="it-pillar-art it-pillar-art--backup" aria-hidden="true">
-            <div class="it-pillar-form"><span></span><span></span><span></span></div>
+          <div class="it-pillar-art">
+            <svg class="it-diagram" viewBox="0 0 360 188" role="img" aria-label="Eine Kopie der Daten wird an einem getrennten Ort gesichert. Ein zweiter Pfeil zeigt die Wiederherstellung zur Datenquelle.">
+              <g class="it-diagram-device">
+                <rect x="22" y="40" width="91" height="105" rx="7"/>
+                <rect x="247" y="40" width="91" height="105" rx="7" stroke-dasharray="4 5"/>
+                <path d="M43 66h49v55H43zm0 18h49m-49 18h49m-39-27h5m-5 18h5m-5 19h5M268 66h49v55h-49zm0 18h49m-49 18h49m-39-27h5m-5 18h5m-5 19h5"/>
+                <path d="M180 35v22m0 78v16" stroke-dasharray="3 5"/>
+              </g>
+              <path class="it-diagram-ok" d="M115 77h130m-14-5 7 5-7 5"/>
+              <path class="it-diagram-accent" d="M245 113H115m14-5-7 5 7 5"/>
+              <text class="it-diagram-note" x="180" y="66" text-anchor="middle">Sichern</text><text class="it-diagram-note" x="180" y="137" text-anchor="middle">Wiederherstellen</text>
+              <text x="68" y="169" text-anchor="middle">Datenquelle</text><text x="292" y="169" text-anchor="middle">Getrennter Ort</text>
+            </svg>
           </div>
           <div class="it-pillar-copy body-l body-on-light flex-column gap-16">
             <h3 class="title-4 heading-on-light">Backup.</h3>
@@ -286,108 +302,44 @@
           <p class="body-s"><strong data-score aria-live="polite">0</strong> / 8 Punkte</p>
         </div>
         <div class="it-game-body">
-          <section class="it-level" data-question hidden aria-labelledby="challenge-level-1">
-            <p class="it-level-difficulty body-s">Einstieg</p>
-            <h3 class="title-4 heading-on-dark" id="challenge-level-1" tabindex="-1">Die unerwartete Anmeldung</h3>
-            <div class="body-m flex-column gap-16">
-              <p>Du erhältst auf deinem Handy eine Anfrage zur Bestätigung einer Anmeldung. Du hast dich gerade aber nirgends angemeldet.</p>
-            </div>
-            <div class="it-option-list" role="group" aria-labelledby="challenge-level-1">
-              <button type="button" class="it-option" data-answer data-correct><span class="it-option-key" aria-hidden="true">A</span>Ablehnen und den Vorfall der IT melden.</button>
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">B</span>Bestätigen, damit die Meldung verschwindet.</button>
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">C</span>Abwarten, ob die Anfrage nochmals erscheint.</button>
-            </div>
+          <section class="it-level" data-question hidden aria-labelledby="challenge-question-title">
+            <p class="it-level-difficulty body-s" data-question-meta></p>
+            <h3 class="title-4 heading-on-dark" id="challenge-question-title" tabindex="-1" data-question-title></h3>
+            <p class="body-l body-on-dark" data-question-prompt></p>
+            <div class="it-option-list" role="group" aria-labelledby="challenge-question-title" data-question-options></div>
+            <template data-answer-correct>Richtige Antwort</template>
+            <template data-answer-incorrect>Falsche Antwort</template>
+            <template data-answer-template>
+              <button type="button" class="it-option" data-answer>
+                <span class="it-option-key" aria-hidden="true"></span>
+                <span data-answer-text></span>
+                <span class="it-answer-mark" aria-hidden="true"></span>
+                <span class="it-readable" data-answer-status></span>
+              </button>
+            </template>
             <div class="it-game-feedback" tabindex="-1" hidden data-level-feedback>
-              <p class="body-m"><strong data-right hidden>Gut entschieden.</strong><strong data-other hidden>Ein Blick auf die sichere Option.</strong></p>
-              <p class="body-m">Bestätige niemals eine Anmeldung, die du nicht selbst ausgelöst hast. Jemand könnte versuchen, auf dein Konto zuzugreifen.</p>
+              <div class="it-feedback-title body-m">
+                <strong data-right>Richtig!</strong><strong data-other>Oops. Falsch!</strong>
+                <span data-point-gain><span data-plus-one>+1 Punkt</span><span data-plus-zero>+0 Punkte</span></span>
+              </div>
+              <p class="body-m body-on-dark" data-question-explanation></p>
               <button type="button" class="it-tool-button" data-next>Weiter</button>
             </div>
           </section>
 
-          <section class="it-level" data-question hidden aria-labelledby="challenge-level-2">
-            <p class="it-level-difficulty body-s">Einstieg</p>
-            <h3 class="title-4 heading-on-dark" id="challenge-level-2" tabindex="-1">Das neue Passwort</h3>
-            <div class="body-m flex-column gap-16">
-              <p>Du benötigst ein Passwort für einen neuen Online-Dienst.</p>
-            </div>
-            <div class="it-option-list" role="group" aria-labelledby="challenge-level-2">
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">A</span>Du verwendest dein bisheriges Passwort und ergänzt eine Zahl.</button>
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">B</span>Du verwendest dasselbe lange Passwort wie bei einem anderen Dienst.</button>
-              <button type="button" class="it-option" data-answer data-correct><span class="it-option-key" aria-hidden="true">C</span>Du erstellst ein neues, individuelles Passwort.</button>
-            </div>
-            <div class="it-game-feedback" tabindex="-1" hidden data-level-feedback>
-              <p class="body-m"><strong data-right hidden>Gut entschieden.</strong><strong data-other hidden>Ein Blick auf die sichere Option.</strong></p>
-              <p class="body-m">Wenn ein Passwort bei einem Datenleck bekannt wird, sollen dadurch nicht auch deine anderen Konten gefährdet sein.</p>
-              <button type="button" class="it-tool-button" data-next>Weiter</button>
-            </div>
-          </section>
-
-          <section class="it-level" data-question hidden aria-labelledby="challenge-level-3">
-            <p class="it-level-difficulty body-s">Alltag</p>
-            <h3 class="title-4 heading-on-dark" id="challenge-level-3" tabindex="-1">Die E-Mail vom Chef</h3>
-            <div class="body-m flex-column gap-16">
-              <p>Du erhältst eine E-Mail von deinem Chef. Er bittet dich dringend, die Bankverbindung eines Lieferanten für eine anstehende Zahlung zu ändern.</p>
-              <p>Die E-Mail-Adresse und die Signatur sehen korrekt aus.</p>
-            </div>
-            <div class="it-option-list" role="group" aria-labelledby="challenge-level-3">
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">A</span>Du passt die Bankverbindung an, weil die Nachricht vom Chef stammt.</button>
-              <button type="button" class="it-option" data-answer data-correct><span class="it-option-key" aria-hidden="true">B</span>Du bestätigst die Änderung über einen unabhängigen, bereits bekannten Kommunikationsweg.</button>
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">C</span>Du antwortest auf die E-Mail und fragst, ob die neue Bankverbindung stimmt.</button>
-            </div>
-            <div class="it-game-feedback" tabindex="-1" hidden data-level-feedback>
-              <p class="body-m"><strong data-right hidden>Gut entschieden.</strong><strong data-other hidden>Ein Blick auf die sichere Option.</strong></p>
-              <p class="body-m">Auch ein echtes E-Mail-Konto kann kompromittiert sein. Änderungen von Bankverbindungen sollten über einen unabhängigen, vertrauenswürdigen Kommunikationsweg überprüft werden.</p>
-              <button type="button" class="it-tool-button" data-next>Weiter</button>
-            </div>
-          </section>
-
-          <section class="it-level" data-question hidden aria-labelledby="challenge-level-4">
-            <p class="it-level-difficulty body-s">Genau hinsehen</p>
-            <h3 class="title-4 heading-on-dark" id="challenge-level-4" tabindex="-1">Die erfolgreiche Datensicherung</h3>
-            <div class="body-m flex-column gap-16">
-              <p>Dein Backup meldet jeden Tag, dass die Sicherung erfolgreich abgeschlossen wurde.</p>
-              <p>Was gibt dir zusätzliche Sicherheit?</p>
-            </div>
-            <div class="it-option-list" role="group" aria-labelledby="challenge-level-4">
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">A</span>Die Erfolgsmeldungen regelmässig archivieren.</button>
-              <button type="button" class="it-option" data-answer><span class="it-option-key" aria-hidden="true">B</span>Die Datensicherung häufiger starten.</button>
-              <button type="button" class="it-option" data-answer data-correct><span class="it-option-key" aria-hidden="true">C</span>Testen, ob sich die gesicherten Daten tatsächlich wiederherstellen lassen.</button>
-            </div>
-            <div class="it-game-feedback" tabindex="-1" hidden data-level-feedback>
-              <p class="body-m"><strong data-right hidden>Gut entschieden.</strong><strong data-other hidden>Ein Blick auf die sichere Option.</strong></p>
-              <p class="body-m">Eine erfolgreiche Sicherungsmeldung allein beweist noch nicht, dass die Wiederherstellung funktioniert.</p>
-              <button type="button" class="it-tool-button" data-next>Weiter</button>
-            </div>
-          </section>
           <section class="it-level it-level--mail" data-phishing hidden aria-labelledby="challenge-mail-title">
             <p class="it-level-difficulty body-s">Fortgeschritten</p>
             <h3 class="title-4 heading-on-dark" id="challenge-mail-title" tabindex="-1" lang="en">Spot the Fake</h3>
             <p class="body-m">Wähle auffällige Stellen in dieser fiktiven Nachricht. Vier Hinweise sind versteckt.</p>
             <div class="it-mail" aria-label="Fiktive E-Mail">
               <div class="it-mail-header">
-                <p class="it-mail-subject">Hinweis zu deinem Konto</p>
-                <dl>
-                  <div><dt>Von</dt><dd><button type="button" class="it-mail-spot" data-clue="sender">Kontodienst &lt;service@kontodienst-hilfe.example&gt;</button></dd></div>
-                  <div><dt>Datum</dt><dd><button type="button" class="it-mail-spot" data-neutral="date">Dienstag, 09.42 Uhr</button></dd></div>
-                </dl>
-              </div>
-              <div class="it-mail-body flex-column gap-16">
-                <p>Hallo</p>
-                <p><button type="button" class="it-mail-spot" data-clue="pressure">Dein Zugang läuft in 30 Minuten ab.</button></p>
-                <p><button type="button" class="it-mail-spot" data-clue="password">Gib dein Passwort ein, um deinen Zugang zu behalten.</button></p>
-                <p><button type="button" class="it-mail-spot it-mail-spot--url" data-clue="link">https://konto-pruefung.example/anmeldung</button></p>
-                <p><button type="button" class="it-mail-spot" data-neutral="signature">Freundliche Grüsse, dein Kontodienst</button></p>
-              </div>
+                <p class="it-mail-subject" data-mail-subject></p>
+                <dl data-mail-meta></dl>
+              </header>
+              <div class="it-mail-body flex-column gap-8" data-mail-body></div>
             </div>
             <p class="it-spot-feedback body-m" role="status" data-clue-feedback></p>
-            <ul class="it-clue-notes body-m" data-clue-notes hidden>
-              <li data-clue-note="sender" hidden>Die Domain des Absenders weicht vom erwarteten Kontodienst ab. Prüfe den Absender über einen dir bekannten Weg.</li>
-              <li data-clue-note="pressure" hidden>Die knappe Frist soll dich zu einer vorschnellen Handlung drängen. Nimm dir Zeit und prüfe die Nachricht.</li>
-              <li data-clue-note="password" hidden>Die Nachricht fordert dich zur Eingabe deines Passworts auf. Öffne den Dienst bei Bedarf über deine bekannte Adresse.</li>
-              <li data-clue-note="link" hidden>Der Link führt auf eine separate, unbekannte Domain. Ein ähnlicher Name ist kein Nachweis für Echtheit.</li>
-            </ul>
-            <template data-neutral-note="date">Eine Uhrzeit allein ist noch kein Hinweis. Schau dir den Inhalt und den Absender genauer an.</template>
-            <template data-neutral-note="signature">Auch eine glaubwürdige Grussformel lässt sich leicht kopieren.</template>
+            <ul class="it-clue-notes body-m" data-clue-notes hidden></ul>
             <template data-mail-complete>Alle vier Hinweise gefunden.</template>
             <template data-mail-revealed>Hier findest du alle vier Hinweise. Gezählt werden die selbst entdeckten Stellen.</template>
             <button type="button" class="it-tool-button it-tool-button--quiet" data-reveal-clues>Auflösung ansehen</button>

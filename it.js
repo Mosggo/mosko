@@ -1,5 +1,4 @@
 (() => {
-  const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const power = document.querySelector("[data-it-power]");
   const atmosphere = document.getElementById(power.getAttribute("aria-controls"));
 
@@ -10,33 +9,26 @@
     atmosphere.dispatchEvent(new Event("mosko:atmosphere-change"));
   });
 
-  const pillars = document.querySelector("[data-it-scene]");
-  let frame = 0;
-  let visible = !("IntersectionObserver" in window);
-  function paintPillars() {
-    frame = 0;
-    if (motion.matches || !visible) return;
-    const { top, height } = pillars.getBoundingClientRect();
-    const viewport = window.innerHeight;
-    const progress = Math.min(1, Math.max(0, (viewport * .88 - top) / (viewport * .59 + height * .15)));
-    pillars.style.setProperty("--it-progress", progress.toFixed(4));
+  const switches = [...document.querySelectorAll("[data-password-switch] a")];
+  function showPasswordTool() {
+    const generator = location.hash === "#passwortgenerator";
+    for (const [index, link] of switches.entries()) {
+      const selected = generator === Boolean(index);
+      document.getElementById(link.getAttribute("aria-controls")).hidden = !selected;
+      if (selected) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    }
   }
-  function schedulePillars() {
-    if (visible && !motion.matches && !frame) frame = requestAnimationFrame(paintPillars);
+  for (const link of switches) {
+    link.addEventListener("click", event => {
+      if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      if (location.hash !== link.hash) history.pushState(null, "", link.hash);
+      showPasswordTool();
+    });
   }
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      schedulePillars();
-    }).observe(pillars);
-  }
-  window.addEventListener("scroll", schedulePillars, { passive: true });
-  window.addEventListener("resize", schedulePillars, { passive: true });
-  motion.addEventListener("change", () => {
-    if (motion.matches) pillars.style.removeProperty("--it-progress");
-    else schedulePillars();
-  });
-  schedulePillars();
+  window.addEventListener("hashchange", showPasswordTool);
+  showPasswordTool();
 
   // The isolated checker sends layout dimensions only.
   const checker = document.querySelector("[data-password-frame]");
@@ -146,118 +138,205 @@
 (() => {
   const start = document.querySelector("[data-challenge-start]");
   const game = document.querySelector("[data-challenge]");
-  const questions = [...game.querySelectorAll("[data-question]")];
+  const question = game.querySelector("[data-question]");
+  const options = question.querySelector("[data-question-options]");
+  const questionTitle = question.querySelector("[data-question-title]");
+  const feedback = question.querySelector("[data-level-feedback]");
   const score = game.querySelector("[data-score]");
   const levelNumber = game.querySelector("[data-level-number]");
   const progress = game.querySelector("progress");
   const mail = game.querySelector("[data-phishing]");
-  const clueButtons = [...mail.querySelectorAll("[data-clue]")];
-  const neutralButtons = [...mail.querySelectorAll("[data-neutral]")];
   const clueNotes = mail.querySelector("[data-clue-notes]");
   const clueFeedback = mail.querySelector("[data-clue-feedback]");
   const reveal = mail.querySelector("[data-reveal-clues]");
   const finish = mail.querySelector("[data-show-result]");
   const result = game.querySelector("[data-challenge-result]");
-  const found = new Set();
+  const { difficultyLabels, questions, scenarios } = moskoChallenge;
+  const roundLength = Number(progress.max) - 1;
+  const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let deck = [];
+  let mailDeck = [];
+  let round = [];
+  let previousMail;
   let points = 0;
   let index = 0;
+  let found = 0;
+
+  function shuffle(items) {
+    const mixed = [...items];
+    for (let position = mixed.length - 1; position > 0; position--) {
+      const picked = Math.floor(Math.random() * (position + 1));
+      [mixed[position], mixed[picked]] = [mixed[picked], mixed[position]];
+    }
+    return mixed;
+  }
+
+  function drawRound() {
+    const lastRound = new Set(round);
+    const chosen = [];
+    const categories = new Set();
+    const difficulties = new Set();
+    while (chosen.length < roundLength) {
+      if (!deck.length) deck = shuffle(questions).filter(item => !chosen.includes(item));
+      let best = -Infinity;
+      let position = 0;
+      deck.forEach((item, candidate) => {
+        const priority = (lastRound.has(item) ? -16 : 0)
+          + (categories.has(item.category) ? 0 : 4)
+          + (difficulties.has(item.difficulty) ? 0 : 2)
+          + (item.difficulty === "hard" && !difficulties.has(item.difficulty) ? 1 : 0);
+        if (priority > best) {
+          best = priority;
+          position = candidate;
+        }
+      });
+      const [item] = deck.splice(position, 1);
+      chosen.push(item);
+      categories.add(item.category);
+      difficulties.add(item.difficulty);
+    }
+    return shuffle(chosen);
+  }
 
   function addPoint() {
     score.textContent = String(++points);
   }
 
-  function showLevel() {
-    questions.forEach((question, number) => { question.hidden = number !== index; });
-    mail.hidden = index !== questions.length;
-    levelNumber.textContent = String(index + 1);
-    (questions[index] ?? mail).querySelector("h3").focus();
+  function answer(item, selected) {
+    if (!feedback.hidden) return;
+    const correct = selected.dataset.answer === item.correct;
+    for (const option of options.children) {
+      const isCorrect = option.dataset.answer === item.correct;
+      option.disabled = true;
+      if (isCorrect || option === selected) {
+        const status = isCorrect ? "correct" : "incorrect";
+        option.dataset.outcome = status;
+        option.querySelector(".it-answer-mark").textContent = isCorrect ? "✓" : "×";
+        option.querySelector("[data-answer-status]").textContent =
+          question.querySelector(isCorrect ? "[data-answer-correct]" : "[data-answer-incorrect]").content.textContent;
+      }
+    }
+    selected.setAttribute("data-selected", "");
+    if (correct) addPoint();
+    feedback.querySelector("[data-right]").hidden = !correct;
+    feedback.querySelector("[data-other]").hidden = correct;
+    feedback.querySelector("[data-plus-one]").hidden = !correct;
+    feedback.querySelector("[data-plus-zero]").hidden = correct;
+    feedback.querySelector("[data-question-explanation]").textContent = item.explanation;
+    progress.value = index + 1;
+    feedback.hidden = false;
+    feedback.focus();
   }
 
-  function showEndOfMail(message, detail) {
-    for (const button of [...clueButtons, ...neutralButtons]) button.disabled = true;
+  function showQuestion() {
+    const item = round[index];
+    question.querySelector("[data-question-meta]").textContent = item.category + " · " + difficultyLabels[item.difficulty];
+    questionTitle.textContent = item.title;
+    question.querySelector("[data-question-prompt]").textContent = item.question;
+    feedback.hidden = true;
+    const template = question.querySelector("[data-answer-template]");
+    const buttons = shuffle(Object.entries(item.answers)).map(([id, text], position) => {
+      const button = template.content.firstElementChild.cloneNode(true);
+      button.dataset.answer = id;
+      button.querySelector(".it-option-key").textContent = labels[position];
+      button.querySelector("[data-answer-text]").textContent = text;
+      button.addEventListener("click", () => answer(item, button));
+      return button;
+    });
+    options.replaceChildren(...buttons);
+    levelNumber.textContent = String(index + 1);
+    question.hidden = false;
+    questionTitle.focus();
+  }
+
+  function showEndOfMail(message, detail = "") {
+    for (const button of mail.querySelectorAll(".it-mail-spot")) button.disabled = true;
     reveal.hidden = true;
     finish.hidden = false;
     progress.value = progress.max;
     const summary = mail.querySelector(message).content.textContent;
-    clueFeedback.textContent = detail ? `${detail} ${summary}` : summary;
+    clueFeedback.textContent = [detail, summary].filter(Boolean).join(" ");
     finish.focus();
+  }
+
+  function renderMailContent(item) {
+    if (!item.clue && !item.neutral) return document.createTextNode(item.text ?? item);
+
+    const spot = document.createElement("button");
+    spot.type = "button";
+    spot.className = item.url ? "it-mail-spot it-mail-spot--url" : "it-mail-spot";
+    spot.textContent = item.text;
+    if (item.neutral) {
+      spot.addEventListener("click", () => { clueFeedback.textContent = item.neutral; });
+      return spot;
+    }
+
+    spot.setAttribute("data-clue", "");
+    const note = document.createElement("li");
+    note.textContent = item.clue;
+    clueNotes.append(note);
+    spot.addEventListener("click", () => {
+      if (spot.hasAttribute("data-found")) return;
+      spot.setAttribute("data-found", "");
+      addPoint();
+      clueFeedback.textContent = item.clue;
+      if (++found === clueNotes.children.length) showEndOfMail("[data-mail-complete]", item.clue);
+    });
+    return spot;
+  }
+
+  function showMail() {
+    if (!mailDeck.length) mailDeck = shuffle(scenarios);
+    const next = Math.max(0, mailDeck.findIndex(item => item !== previousMail));
+    const [scenario] = mailDeck.splice(next, 1);
+    previousMail = scenario;
+    found = 0;
+    clueFeedback.textContent = "";
+    clueNotes.hidden = true;
+    clueNotes.replaceChildren();
+    reveal.hidden = false;
+    finish.hidden = true;
+    mail.querySelector("[data-mail-subject]").textContent = scenario.subject;
+    mail.querySelector("[data-mail-meta]").replaceChildren(...scenario.meta.map(item => {
+      const row = document.createElement("div");
+      const label = document.createElement("dt");
+      const value = document.createElement("dd");
+      label.textContent = item.label;
+      value.append(renderMailContent(item));
+      row.append(label, value);
+      return row;
+    }));
+    mail.querySelector("[data-mail-body]").replaceChildren(...scenario.body.map(item => {
+      const line = document.createElement("p");
+      line.append(renderMailContent(item));
+      return line;
+    }));
+    levelNumber.textContent = String(roundLength + 1);
+    question.hidden = true;
+    mail.hidden = false;
+    mail.querySelector("h3").focus();
   }
 
   function restart() {
     points = 0;
     index = 0;
-    found.clear();
+    round = drawRound();
     score.textContent = String(points);
     progress.value = 0;
     result.hidden = true;
     result.querySelectorAll("[data-tier]").forEach(tier => { tier.hidden = true; });
-    reveal.hidden = false;
-    finish.hidden = true;
-    clueFeedback.textContent = "";
-    clueNotes.hidden = true;
-    clueNotes.querySelectorAll("li").forEach(note => { note.hidden = true; });
-    for (const button of [...clueButtons, ...neutralButtons]) {
-      button.disabled = false;
-      button.removeAttribute("data-found");
-    }
-    for (const question of questions) {
-      question.removeAttribute("data-answered");
-      question.querySelector("[data-level-feedback]").hidden = true;
-      for (const button of question.querySelectorAll("[data-answer]")) {
-        button.disabled = false;
-        button.removeAttribute("data-selected");
-      }
-    }
+    mail.hidden = true;
     game.hidden = false;
     start.hidden = true;
-    showLevel();
+    showQuestion();
   }
 
-  for (const question of questions) {
-    const feedback = question.querySelector("[data-level-feedback]");
-    const buttons = [...question.querySelectorAll("[data-answer]")];
-    for (const button of buttons) {
-      button.addEventListener("click", () => {
-        if (question.hasAttribute("data-answered")) return;
-        question.setAttribute("data-answered", "");
-        button.setAttribute("data-selected", "");
-        for (const option of buttons) option.disabled = true;
-        const correct = button.hasAttribute("data-correct");
-        if (correct) addPoint();
-        feedback.querySelector("[data-right]").hidden = !correct;
-        feedback.querySelector("[data-other]").hidden = correct;
-        feedback.hidden = false;
-        progress.value = index + 1;
-        feedback.focus();
-      });
-    }
-    question.querySelector("[data-next]").addEventListener("click", () => {
-      index++;
-      showLevel();
-    });
-  }
-
-  for (const button of clueButtons) {
-    button.addEventListener("click", () => {
-      const clue = button.dataset.clue;
-      if (found.has(clue)) return;
-      found.add(clue);
-      button.setAttribute("data-found", "");
-      addPoint();
-      const note = clueNotes.querySelector(`[data-clue-note="${clue}"]`);
-      clueFeedback.textContent = note.textContent;
-      if (found.size === clueButtons.length) showEndOfMail("[data-mail-complete]", note.textContent);
-    });
-  }
-  for (const button of neutralButtons) {
-    button.addEventListener("click", () => {
-      clueFeedback.textContent = mail.querySelector(`template[data-neutral-note="${button.dataset.neutral}"]`).content.textContent;
-    });
-  }
-
+  question.querySelector("[data-next]").addEventListener("click", () => {
+    if (++index < roundLength) showQuestion();
+    else showMail();
+  });
   reveal.addEventListener("click", () => {
     clueNotes.hidden = false;
-    clueNotes.querySelectorAll("li").forEach(note => { note.hidden = false; });
     showEndOfMail("[data-mail-revealed]");
   });
   finish.addEventListener("click", () => {
@@ -265,7 +344,7 @@
     result.hidden = false;
     const tier = points === 8 ? "perfect" : points >= 5 ? "good" : "learn";
     result.dataset.result = tier;
-    const summary = result.querySelector(`[data-tier="${tier}"]`);
+    const summary = result.querySelector('[data-tier="' + tier + '"]');
     summary.hidden = false;
     summary.querySelector("h3").focus();
   });
