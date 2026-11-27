@@ -153,6 +153,7 @@
   const options = question.querySelector("[data-question-options]");
   const questionTitle = question.querySelector("[data-question-title]");
   const feedback = question.querySelector("[data-level-feedback]");
+  const nextActions = question.querySelector("[data-next-actions]");
   const score = game.querySelector("[data-score]");
   const levelNumber = game.querySelector("[data-level-number]");
   const progress = game.querySelector("progress");
@@ -162,6 +163,7 @@
   const reveal = mail.querySelector("[data-reveal-clues]");
   const finish = mail.querySelector("[data-show-result]");
   const result = game.querySelector("[data-challenge-result]");
+  const compactGame = matchMedia("(max-width: 47.99rem) and (min-height: 30rem)");
   const { difficultyLabels, questions, scenarios } = moskoChallenge;
   const roundLength = Number(progress.max) - 1;
   const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -213,6 +215,16 @@
     score.textContent = String(++points);
   }
 
+  function focusLevel(target) {
+    if (compactGame.matches) {
+      const content = target.closest("[data-level-content]");
+      if (content) content.scrollTop = 0;
+      target.focus({ preventScroll: true });
+    } else {
+      target.focus();
+    }
+  }
+
   function answer(item, selected) {
     if (!feedback.hidden) return;
     const correct = selected.dataset.answer === item.correct;
@@ -236,7 +248,15 @@
     feedback.querySelector("[data-question-explanation]").textContent = item.explanation;
     progress.value = index + 1;
     feedback.hidden = false;
-    feedback.focus();
+    nextActions.hidden = false;
+    if (compactGame.matches) {
+      const content = feedback.closest("[data-level-content]");
+      feedback.focus({ preventScroll: true });
+      const clipped = feedback.getBoundingClientRect().bottom - content.getBoundingClientRect().bottom;
+      if (clipped > 0) content.scrollTop += clipped;
+    } else {
+      feedback.focus();
+    }
   }
 
   function showQuestion() {
@@ -245,6 +265,7 @@
     questionTitle.textContent = item.title;
     question.querySelector("[data-question-prompt]").textContent = item.question;
     feedback.hidden = true;
+    nextActions.hidden = true;
     const template = question.querySelector("[data-answer-template]");
     const buttons = shuffle(Object.entries(item.answers)).map(([id, text], position) => {
       const button = template.content.firstElementChild.cloneNode(true);
@@ -257,7 +278,7 @@
     options.replaceChildren(...buttons);
     levelNumber.textContent = String(index + 1);
     question.hidden = false;
-    questionTitle.focus();
+    focusLevel(questionTitle);
   }
 
   function showEndOfMail(message, detail = "") {
@@ -267,7 +288,7 @@
     progress.value = progress.max;
     const summary = mail.querySelector(message).content.textContent;
     clueFeedback.textContent = [detail, summary].filter(Boolean).join(" ");
-    finish.focus();
+    finish.focus({ preventScroll: compactGame.matches });
   }
 
   function renderMailContent(item) {
@@ -276,7 +297,12 @@
     const spot = document.createElement("button");
     spot.type = "button";
     spot.className = item.url ? "it-mail-spot it-mail-spot--url" : "it-mail-spot";
-    spot.textContent = item.text;
+    const pathStart = item.url ? item.text.indexOf("/", item.text.indexOf("://") + 3) : -1;
+    if (pathStart >= 0) {
+      spot.append(item.text.slice(0, pathStart), document.createElement("wbr"), item.text.slice(pathStart));
+    } else {
+      spot.textContent = item.text;
+    }
     if (item.neutral) {
       spot.addEventListener("click", () => { clueFeedback.textContent = item.neutral; });
       return spot;
@@ -325,7 +351,7 @@
     levelNumber.textContent = String(roundLength + 1);
     question.hidden = true;
     mail.hidden = false;
-    mail.querySelector("h3").focus();
+    focusLevel(mail.querySelector("h3"));
   }
 
   function restart() {
@@ -339,6 +365,7 @@
     mail.hidden = true;
     game.hidden = false;
     start.hidden = true;
+    if (compactGame.matches) game.scrollIntoView({ block: "start", behavior: "instant" });
     showQuestion();
   }
 
@@ -349,6 +376,10 @@
   reveal.addEventListener("click", () => {
     clueNotes.hidden = false;
     showEndOfMail("[data-mail-revealed]");
+    if (compactGame.matches) {
+      const content = clueNotes.closest("[data-level-content]");
+      content.scrollTop += clueNotes.getBoundingClientRect().top - content.getBoundingClientRect().top;
+    }
   });
   finish.addEventListener("click", () => {
     mail.hidden = true;
@@ -357,7 +388,8 @@
     result.dataset.result = tier;
     const summary = result.querySelector('[data-tier="' + tier + '"]');
     summary.hidden = false;
-    summary.querySelector("h3").focus();
+    result.scrollTop = 0;
+    focusLevel(summary.querySelector("h3"));
   });
 
   start.addEventListener("click", restart);

@@ -418,6 +418,7 @@
 .it-game-top progress::-webkit-progress-value { border-radius: var(--radius-full); background: var(--primary-brand-1); }
 .it-game-body { padding: clamp(var(--size-20), 5vw, var(--size-64)); }
 .it-level { display: grid; gap: var(--size-20); max-inline-size: 56rem; }
+.it-level-content, .it-level-actions { display: contents; }
 .it-level-difficulty { color: var(--chili-ember); font-weight: 700; }
 .it-level .it-option { border-color: var(--light-line); color: var(--primary-light-1); }
 .it-level .it-option:not(:disabled):hover, .it-level .it-option[data-selected] {
@@ -497,6 +498,9 @@
   color: var(--primary-dark-1);
 }
 
+@media (max-width: 64rem) {
+  .it-check-grid { grid-template-columns: minmax(0, 1fr); }
+}
 @media (max-width: 61.99rem) {
   .it-pillars { gap: var(--size-20); }
   .it-pillar-copy { font-size: var(--body-size-m); }
@@ -507,7 +511,82 @@
   .it-pillars { grid-template-columns: minmax(0, 1fr); gap: var(--size-48); }
   .it-pillar-copy { font-size: var(--body-size-l); }
   .it-game-top { padding-inline: var(--size-16); gap: var(--size-8); }
-  .it-mail-header dl div { grid-template-columns: minmax(3.75rem, max-content) minmax(0, 1fr); gap: var(--size-4); }
+  .it-level .it-option {
+    display: grid;
+    align-items: start;
+    gap: var(--size-8);
+    padding: var(--size-8) var(--size-12);
+    font-size: .94rem;
+    line-height: 1.36;
+  }
+  .it-level .it-answer-mark:empty { display: none; }
+  .it-mail { border-radius: var(--radius-s) var(--radius-m) var(--radius-s) var(--radius-s); }
+  .it-mail-header, .it-mail-body { padding: var(--size-12); }
+  .it-mail-subject { line-height: 1.2; }
+  .it-mail-header dl div { grid-template-columns: minmax(3.75rem, max-content) minmax(0, 1fr); gap: var(--size-8); }
+  .it-mail-header dt { font-size: var(--body-size-s); }
+  .it-mail-header dd, .it-mail-body { font-size: .94rem; line-height: 1.42; }
+  .it-mail-spot { min-block-size: 2.75rem; -webkit-tap-highlight-color: transparent; }
+  .it-mail-body .it-mail-spot {
+    display: block;
+    inline-size: 100%;
+    margin-inline: 0;
+    padding: var(--size-8);
+    border-inline-start: var(--hairline) solid var(--dark-line);
+    background: var(--primary-light-1);
+  }
+  .it-mail-body .it-mail-spot[data-found] { background: var(--primary-transparent-1); }
+}
+@media (max-width: 47.99rem) and (min-height: 30rem) {
+  .it-game:not([hidden]) {
+    --it-game-inset: calc(var(--nav-top) + 3.75rem);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    block-size: calc(100svh - var(--it-game-inset) - max(var(--size-8), env(safe-area-inset-bottom)));
+    scroll-margin-block-start: var(--it-game-inset);
+    border-radius: var(--radius-m) var(--size-32) var(--radius-m) var(--radius-m);
+  }
+  .it-game-top { padding-block: var(--size-8); }
+  .it-game-body, .it-game-body .it-level { display: grid; min-block-size: 0; padding: 0; }
+  .it-game-body .it-level { grid-template-rows: minmax(0, 1fr) auto; gap: 0; }
+  .it-game-body .it-level h3 { font-size: var(--title-size-5); }
+  .it-level-content {
+    display: grid;
+    align-content: start;
+    gap: var(--size-8);
+    overflow-y: auto;
+    padding: var(--size-12);
+  }
+  .it-level-content > :is(.body-l, .body-m), .it-game-feedback .body-m {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .it-level-actions {
+    display: grid;
+    gap: var(--size-8);
+    padding: var(--size-8) var(--size-12);
+    border-block-start: var(--hairline) solid var(--light-line);
+  }
+  .it-level-actions .it-tool-button { inline-size: 100%; min-block-size: 2.75rem; }
+  .it-spot-feedback { min-block-size: 0; font-size: var(--body-size-s); line-height: 1.4; }
+  .it-game-body .it-game-result {
+    grid-template-rows: none;
+    align-content: start;
+    gap: var(--size-16);
+    overflow-y: auto;
+    padding: var(--size-12);
+  }
+}
+@media (max-width: 47.99rem) and (min-height: 30rem) and (max-height: 41rem) {
+  .it-game-top { padding-block: .375rem; }
+  .it-level-content { gap: .375rem; padding: var(--size-8); }
+  .it-level-content > .body-l { font-size: .94rem; line-height: 1.32; }
+  .it-level .it-option {
+    min-block-size: 2.75rem;
+    padding: .375rem var(--size-8);
+    font-size: .875rem;
+    line-height: 1.32;
+  }
 }
 @media (max-width: 22rem) {
   .it-download { padding-inline: var(--size-16); gap: var(--size-12); }

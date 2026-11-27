@@ -10,14 +10,14 @@
   <link rel="icon" href="../assets/img/mosko-signet.svg" type="image/svg+xml">
   <link rel="preload" href="../assets/fonts/stack-sans-headline.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../assets/fonts/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles.css?v=mobile-curtain">
   <link rel="stylesheet" href="../service.css">
-  <link rel="stylesheet" href="../it.css?v=security-fields">
+  <link rel="stylesheet" href="../it.css?v=it-mobile">
   <script src="../scenes.js" defer></script>
-  <script src="../motion.js" defer></script>
+  <script src="../motion.js?v=mobile-curtain" defer></script>
   <script src="../language.js" defer></script>
   <script src="../it-challenge-data.js" defer></script>
-  <script src="../it.js?v=security-fields" defer></script>
+  <script src="../it.js?v=it-mobile" defer></script>
 </head>
 <body class="service-page it-page" id="start" data-native-scroll>
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
@@ -330,47 +330,55 @@
         </div>
         <div class="it-game-body">
           <section class="it-level" data-question hidden aria-labelledby="challenge-question-title">
-            <p class="it-level-difficulty body-s" data-question-meta></p>
-            <h3 class="title-4 heading-on-dark" id="challenge-question-title" tabindex="-1" data-question-title></h3>
-            <p class="body-l body-on-dark" data-question-prompt></p>
-            <div class="it-option-list" role="group" aria-labelledby="challenge-question-title" data-question-options></div>
-            <template data-answer-correct>Richtige Antwort</template>
-            <template data-answer-incorrect>Falsche Antwort</template>
-            <template data-answer-template>
-              <button type="button" class="it-option" data-answer>
-                <span class="it-option-key" aria-hidden="true"></span>
-                <span data-answer-text></span>
-                <span class="it-answer-mark" aria-hidden="true"></span>
-                <span class="it-readable" data-answer-status></span>
-              </button>
-            </template>
-            <div class="it-game-feedback" tabindex="-1" hidden data-level-feedback>
-              <div class="it-feedback-title body-m">
-                <strong data-right>Richtig!</strong><strong data-other>Oops. Falsch!</strong>
-                <span data-point-gain><span data-plus-one>+1 Punkt</span><span data-plus-zero>+0 Punkte</span></span>
+            <div class="it-level-content" data-level-content>
+              <p class="it-level-difficulty body-s" data-question-meta></p>
+              <h3 class="title-4 heading-on-dark" id="challenge-question-title" tabindex="-1" data-question-title></h3>
+              <p class="body-l body-on-dark" data-question-prompt></p>
+              <div class="it-option-list" role="group" aria-labelledby="challenge-question-title" data-question-options></div>
+              <template data-answer-correct>Richtige Antwort</template>
+              <template data-answer-incorrect>Falsche Antwort</template>
+              <template data-answer-template>
+                <button type="button" class="it-option" data-answer>
+                  <span class="it-option-key" aria-hidden="true"></span>
+                  <span data-answer-text></span>
+                  <span class="it-answer-mark" aria-hidden="true"></span>
+                  <span class="it-readable" data-answer-status></span>
+                </button>
+              </template>
+              <div class="it-game-feedback" tabindex="-1" hidden data-level-feedback>
+                <div class="it-feedback-title body-m">
+                  <strong data-right>Richtig!</strong><strong data-other>Oops. Falsch!</strong>
+                  <span data-point-gain><span data-plus-one>+1 Punkt</span><span data-plus-zero>+0 Punkte</span></span>
+                </div>
+                <p class="body-m body-on-dark" data-question-explanation></p>
               </div>
-              <p class="body-m body-on-dark" data-question-explanation></p>
+            </div>
+            <div class="it-level-actions" data-next-actions hidden>
               <button type="button" class="it-tool-button" data-next>Weiter</button>
             </div>
           </section>
 
           <section class="it-level it-level--mail" data-phishing hidden aria-labelledby="challenge-mail-title">
-            <p class="it-level-difficulty body-s">Fortgeschritten</p>
-            <h3 class="title-4 heading-on-dark" id="challenge-mail-title" tabindex="-1" lang="en">Spot the Fake</h3>
-            <p class="body-m">Wähle auffällige Stellen in dieser fiktiven Nachricht. Vier Hinweise sind versteckt.</p>
-            <div class="it-mail" aria-label="Fiktive E-Mail">
-              <div class="it-mail-header">
-                <p class="it-mail-subject" data-mail-subject></p>
-                <dl data-mail-meta></dl>
-              </header>
-              <div class="it-mail-body flex-column gap-8" data-mail-body></div>
+            <div class="it-level-content" data-level-content>
+              <p class="it-level-difficulty body-s">Fortgeschritten</p>
+              <h3 class="title-4 heading-on-dark" id="challenge-mail-title" tabindex="-1" lang="en">Spot the Fake</h3>
+              <p class="body-m">Wähle auffällige Stellen in dieser fiktiven Nachricht. Vier Hinweise sind versteckt.</p>
+              <div class="it-mail" aria-label="Fiktive E-Mail">
+                <div class="it-mail-header">
+                  <p class="it-mail-subject" data-mail-subject></p>
+                  <dl data-mail-meta></dl>
+                </div>
+                <div class="it-mail-body flex-column gap-8" data-mail-body></div>
+              </div>
+              <ul class="it-clue-notes body-m" data-clue-notes hidden></ul>
             </div>
-            <p class="it-spot-feedback body-m" role="status" data-clue-feedback></p>
-            <ul class="it-clue-notes body-m" data-clue-notes hidden></ul>
-            <template data-mail-complete>Alle vier Hinweise gefunden.</template>
-            <template data-mail-revealed>Hier findest du alle vier Hinweise. Gezählt werden die selbst entdeckten Stellen.</template>
-            <button type="button" class="it-tool-button it-tool-button--quiet" data-reveal-clues>Auflösung ansehen</button>
-            <button type="button" class="it-tool-button" data-show-result hidden>Ergebnis ansehen</button>
+            <div class="it-level-actions">
+              <p class="it-spot-feedback body-m" role="status" data-clue-feedback></p>
+              <template data-mail-complete>Alle vier Hinweise gefunden.</template>
+              <template data-mail-revealed>Hier findest du alle vier Hinweise. Gezählt werden die selbst entdeckten Stellen.</template>
+              <button type="button" class="it-tool-button it-tool-button--quiet" data-reveal-clues>Auflösung ansehen</button>
+              <button type="button" class="it-tool-button" data-show-result hidden>Ergebnis ansehen</button>
+            </div>
           </section>
           <section class="it-level it-game-result" data-challenge-result hidden aria-label="Ergebnis">
             <div data-tier="perfect" hidden>

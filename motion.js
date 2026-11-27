@@ -7,6 +7,7 @@
   const stage = document.querySelector(".signature-stage");
   const curtain = document.querySelector(".curtain");
   const curtainAnchor = document.querySelector(".footer-anchor");
+  const header = document.querySelector(".site-header");
   const passage = document.querySelector(".signature-still");
   const heroCanvas = document.querySelector(".hero-field");
   const signatureCanvas = document.querySelector(".signature-field");
@@ -17,6 +18,7 @@
   const finePointer = matchMedia("(pointer: fine) and (hover: hover)");
   const stickyStage = matchMedia("(min-height: 34rem)");
   const stickyCurtain = matchMedia("(min-width: 48rem) and (min-height: 41rem)");
+  const compactCurtain = matchMedia("(max-width: 47.99rem)");
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
   const smooth = (value) => {
     const t = clamp(value);
@@ -175,6 +177,15 @@
     curtain.style.setProperty("--curtain-clip", clip);
   }
 
+  function fitCurtain() {
+    const space = window.innerHeight - header.getBoundingClientRect().bottom;
+    const compactFits = compactCurtain.matches && curtain.offsetHeight < space;
+    root.classList.toggle("curtain-ready", !reduced.matches && (stickyCurtain.matches || compactFits));
+    previousScroll = NaN;
+    lastCurtainClip = "";
+    frameRequest();
+  }
+
   function update(now) {
     frame = 0;
     const dt = lastTime ? Math.max(1, now - lastTime) : 16.7;
@@ -206,9 +217,7 @@
     if (signatureVisible) updateSignature();
     else signatureArt?.draw(0.69);
     curtainOverlap = parseFloat(getComputedStyle(main).borderBottomLeftRadius) || 0;
-    previousScroll = NaN;
-    lastCurtainClip = "";
-    frameRequest();
+    fitCurtain();
   }
 
   function syncPreferences() {
@@ -228,7 +237,6 @@
       }
     }
     root.classList.toggle("motion-ready", Boolean(signatureArt) && stickyStage.matches && !reduced.matches);
-    root.classList.toggle("curtain-ready", stickyCurtain.matches && !reduced.matches);
     fitArtwork();
   }
 
@@ -328,6 +336,7 @@
     }
     window.addEventListener("scroll", frameRequest, { passive: true });
     window.addEventListener("resize", fitArtwork, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(fitCurtain).observe(curtain);
 
     curtain.addEventListener("focusin", (event) => {
       if (!event.target.matches(":focus-visible") || !root.classList.contains("curtain-ready")) return;
@@ -356,7 +365,7 @@
       signatureVisible = true;
     }
 
-    for (const media of [reduced, finePointer, stickyStage, stickyCurtain]) media.addEventListener("change", syncPreferences);
+    for (const media of [reduced, finePointer, stickyStage, stickyCurtain, compactCurtain]) media.addEventListener("change", syncPreferences);
   }
 
   function applySignatureVariant() {

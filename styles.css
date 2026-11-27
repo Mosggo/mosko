@@ -854,14 +854,18 @@ main {
   .motion-ready .signature { min-block-size: calc(100svh + var(--signature-track)); }
   .motion-ready .signature-stage { position: sticky; inset-block-start: 0; }
 }
-@media (min-width: 48rem) and (min-height: 41rem) and (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) {
   .curtain-ready .footer-anchor { margin-block-start: calc(-1 * var(--curtain-overlap)); }
-  .curtain-ready .curtain { position: sticky; inset-block-end: 0; min-block-size: 45svh; }
   .curtain-ready .curtain {
+    position: sticky;
+    inset-block-end: 0;
     clip-path: inset(var(--curtain-clip, 100%) 0 0);
   }
   .curtain-ready:has(.curtain .preview-note:target) .footer-anchor { margin-block-start: 0; }
   .curtain-ready .curtain:has(.preview-note:target) { position: relative; clip-path: none; }
+}
+@media (min-width: 48rem) and (min-height: 41rem) and (prefers-reduced-motion: no-preference) {
+  .curtain-ready .curtain { min-block-size: 45svh; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
