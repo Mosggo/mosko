@@ -205,7 +205,8 @@
         const opacity = (idle ? 0 : 0.038 + tone * 0.11 + drift * 0.036 + touch * (0.065 + motion * 0.10)) + energy * 0.32;
         const motifAlpha = motif ? 0.142 + tone * 0.105 : 0;
         const ambient = hasHello && !motif ? opacity * .55 : opacity;
-        ctx.globalAlpha = clamp((ambient + motifAlpha) * gain) * visibility;
+        const contrast = motif ? 1.25 : 1;
+        ctx.globalAlpha = clamp((ambient + motifAlpha) * gain * contrast) * visibility;
         const nx = x + touch * Math.cos(phase) * (1.6 + motion * 3.4) + energy * Math.sin(phase) * 4
           + motion * Math.sin(seconds * 0.7 + phase) * 1.8;
         const ny = y + touch * Math.sin(phase) * (1.3 + motion * 2.7) - energy * 2
