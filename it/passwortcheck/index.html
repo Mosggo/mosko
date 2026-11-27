@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-OdBa7NAbeKSHKLgEaufDIhYHEhwCAMbm19KPAIwiDFk='; style-src 'unsafe-inline'; connect-src https://api.pwnedpasswords.com/range/; form-action 'none'; base-uri 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Passwortchecker | MOSKO.</title>
+  <style>
+    :root { color-scheme: dark; color: #f3f2ef; font: 1rem/1.55 system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { padding: 0.4rem; }
+    p, h2 { margin: 0; }
+    label { display: block; margin-block-end: .35rem; font-weight: 650; }
+    .field { display: flex; gap: .5rem; align-items: stretch; }
+    input, button { color: inherit; font: inherit; }
+    input { flex: 1; min-width: 0; min-height: 2.8rem; padding: .6rem .65rem; background: #36312f; border: 1px solid #d4d2c4; border-radius: .5rem; }
+    button { min-height: 2.8rem; padding: .55rem .85rem; border: 1px solid #d4d2c4; border-radius: .5rem; background: transparent; cursor: pointer; }
+    button:hover { background: #36312f; }
+    :focus-visible { outline: 2px solid #ffbc91; outline-offset: 3px; }
+    .check-action { margin-block-start: .95rem; border-color: #fc5d3b; background: #fc5d3b; color: #1c1716; font-weight: 700; }
+    .check-action:hover { background: #ffbc91; border-color: #ffbc91; }
+    .result { margin-block-start: 1rem; }
+    .result:empty { margin: 0; }
+    .result h2 { margin-block-end: .4rem; font-size: clamp(1.15rem, 5vw, 1.65rem); line-height: 1.2; color: #ffbc91; }
+    .result p + p { margin-block-start: .4rem; }
+    .result p:last-child { padding-block-end: .2rem; }
+    [hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <p data-fallback>Der Passwortcheck benötigt JavaScript und eine sichere Browser-Umgebung mit Web Crypto.</p>
+    <div data-controls hidden>
+      <label for="password">Passwortidee</label>
+      <div class="field">
+        <input id="password" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore data-bwignore>
+        <button type="button" data-visibility aria-controls="password" aria-pressed="false" aria-label="Passwort anzeigen"><span data-show aria-hidden="true">Anzeigen</span><span data-hide aria-hidden="true" hidden>Verbergen</span></button>
+      </div>
+      <button type="button" class="check-action" data-check>Passwort überprüfen</button>
+    </div>
+    <div class="result" data-result role="status" aria-live="polite" aria-atomic="true"></div>
+    <template data-state="empty"><p>Gib zuerst eine Passwortidee ein.</p></template>
+    <template data-state="pending"><p>Die Datenbank wird abgefragt …</p></template>
+    <template data-state="hit">
+      <h2 lang="en">Oops, Hasi.</h2>
+      <p>Dieses Passwort wurde <strong data-count></strong> Mal in bekannten kompromittierten Passwortdaten gefunden.</p>
+      <p>Falls du dieses Passwort verwendest, wird es Zeit für ein neues. Verwende für jedes Konto ein eigenes Passwort.</p>
+    </template>
+    <template data-state="miss">
+      <h2 lang="en">Looking good.</h2>
+      <p>Dieses Passwort wurde in der Datenbank nicht gefunden.</p>
+      <p>Das ist ein gutes Zeichen, aber keine Garantie dafür, dass dein Passwort sicher ist.</p>
+    </template>
+    <template data-state="error">
+      <h2 lang="en">Well, that didn't work.</h2>
+      <p>Die Datenbank ist momentan nicht erreichbar oder die Prüfung konnte nicht abgeschlossen werden. Versuch es später nochmals.</p>
+      <p data-error-detail></p>
+    </template>
+    <template data-error="timeout">Die Abfrage hat zu lange gedauert.</template>
+    <template data-error="network">Die Netzwerkverbindung konnte nicht hergestellt oder gehalten werden.</template>
+    <template data-error="service">Der Dienst hat mit einem HTTP-Fehler geantwortet.</template>
+    <template data-error="invalid">Die Antwort hatte ein ungültiges Format.</template>
+    <template data-error="crypto">Der digitale Fingerabdruck konnte nicht erstellt werden.</template>
+  </main>
+  <script>
+(() => {
+  const main = document.querySelector("main");
+  const input = document.querySelector("#password");
+  const result = document.querySelector("[data-result]");
+  const visibility = document.querySelector("[data-visibility]");
+  const endpoint = "https://api.pwnedpasswords.com/range/";
+  let current = null;
+
+  function reportHeight() {
+    if (window.parent === window) return;
+    parent.postMessage({ type: "mosko:check-height", height: Math.ceil(main.getBoundingClientRect().height) + 2 }, "*");
+  }
+
+  function render(state, detail) {
+    const view = document.querySelector(`template[data-state="${state}"]`).content.cloneNode(true);
+    if (state === "hit") view.querySelector("[data-count]").textContent = new Intl.NumberFormat(document.documentElement.lang).format(detail);
+    if (state === "error") {
+      view.querySelector("[data-error-detail]").textContent = document.querySelector(`template[data-error="${detail}"]`).content.textContent;
+    }
+    result.replaceChildren(view);
+    reportHeight();
+  }
+
+  function setVisibility(showing) {
+    input.type = showing ? "text" : "password";
+    visibility.setAttribute("aria-pressed", String(showing));
+    visibility.querySelector("[data-show]").hidden = showing;
+    visibility.querySelector("[data-hide]").hidden = !showing;
+  }
+
+  async function fingerprint(bytes) {
+    try {
+      const digest = new Uint8Array(await crypto.subtle.digest("SHA-1", bytes));
+      const hex = Array.from(digest, value => value.toString(16).padStart(2, "0")).join("").toUpperCase();
+      digest.fill(0);
+      return [hex.slice(0, 5), hex.slice(5)];
+    } finally {
+      bytes.fill(0);
+    }
+  }
+
+  function parseRange(text, suffix) {
+    if (text.length > 160000) return null;
+    let count = 0;
+    const seen = new Set();
+    for (const line of text.replace(/\r?\n$/, "").split(/\r?\n/)) {
+      const match = /^([0-9A-F]{35}):(\d+)$/i.exec(line);
+      if (!match) return null;
+      const end = match[1].toUpperCase();
+      const occurrences = Number(match[2]);
+      if (!Number.isSafeInteger(occurrences) || seen.has(end)) return null;
+      seen.add(end);
+      if (end === suffix && occurrences > 0) count = occurrences;
+    }
+    return count;
+  }
+
+  async function check() {
+    current?.abort();
+    current = null;
+    if (!input.value) {
+      render("empty");
+      input.focus();
+      return;
+    }
+
+    const controller = new AbortController();
+    current = controller;
+    let signature;
+    let timeoutId;
+    let timedOut = false;
+    let failure = "crypto";
+
+    try {
+      const bytes = new TextEncoder().encode(input.value);
+      input.value = "";
+      setVisibility(false);
+      render("pending");
+      signature = await fingerprint(bytes);
+      if (current !== controller) return;
+
+      failure = "network";
+      timeoutId = setTimeout(() => {
+        timedOut = true;
+        controller.abort();
+      }, 8500);
+      const response = await fetch(endpoint + signature[0], {
+        method: "GET",
+        headers: { "Add-Padding": "true" },
+        credentials: "omit",
+        referrerPolicy: "no-referrer",
+        cache: "no-store",
+        redirect: "error",
+        signal: controller.signal,
+      });
+      if (current !== controller) return;
+      if (response.status !== 200) {
+        render("error", "service");
+        return;
+      }
+      const reply = await response.text();
+      if (current !== controller) return;
+      const count = parseRange(reply, signature[1]);
+      if (count === null) render("error", "invalid");
+      else render(count ? "hit" : "miss", count);
+    } catch {
+      if (current === controller) render("error", timedOut ? "timeout" : failure);
+    } finally {
+      clearTimeout(timeoutId);
+      if (signature) signature.fill("");
+      if (current === controller) current = null;
+    }
+  }
+
+  if (window.isSecureContext && window.crypto?.subtle && window.AbortController && window.fetch) {
+    document.querySelector("[data-fallback]").hidden = true;
+    document.querySelector("[data-controls]").hidden = false;
+    visibility.addEventListener("click", () => setVisibility(input.type === "password"));
+    document.querySelector("[data-check]").addEventListener("click", check);
+    window.addEventListener("pagehide", () => {
+      const pending = current;
+      current = null;
+      pending?.abort();
+      input.value = "";
+      setVisibility(false);
+      result.replaceChildren();
+    });
+  }
+  if ("ResizeObserver" in window) new ResizeObserver(reportHeight).observe(main);
+  reportHeight();
+})();
+  </script>
+</body>
+</html>

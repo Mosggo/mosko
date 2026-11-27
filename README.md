@@ -1,6 +1,6 @@
 # MOSKO. HTML-Prototyp
 
-Die Startseite liegt in `index.html`, die Webdesign-Leistungsseite in `webdesign/index.html` und das IT-Editorial in `it/index.html`. Für die lokale Vorschau den Ordner über HTTP bereitstellen. Auf GitHub Pages liegen die relativen Seitenpfade unter `/mosko/`.
+Die Startseite liegt in `index.html`, die Webdesign-Leistungsseite in `webdesign/index.html` und die IT-Werkzeugkiste in `it/index.html`. Für die lokale Vorschau den Ordner über `http://127.0.0.1` bereitstellen. Auf GitHub Pages liegen die relativen Seitenpfade unter `/mosko/`.
 
 ## Gemeinsame Komponenten
 
@@ -16,10 +16,19 @@ Die versetzten Projektansichten sind eigenständige HTML-Artikel. Zum Austausch 
 
 Offen für die nächste Projektphase sind finale NetJ-Ansichten, echte Kundenrezensionen im Slot `google-reviews`, eine allfällige farbliche Anpassung des Shootingfotos, die MWST-Angabe zum Preisrahmen und die englischen Inhalte. Die Projektanfrage führt vorläufig an `info@mosko.ch`. Das Ziel der künftigen Kontaktseite ist als `data-wp-path` hinterlegt.
 
-Der öffentliche Pages-Prototyp enthält das lokal genutzte Fernwartungsmodul derzeit nicht. Beim Publizieren nur die Webdateien und die freigegebenen, optimierten Bildkopien übernehmen.
+## IT-Werkzeugkiste
 
-## IT-Editorial
+- `it/` nutzt den freigegebenen Chili-Hero mit Power-Schalter und den globalen Curtain Footer. Das Passwort-Special wechselt zwischen einem dunklen Checker, einer hellen Satzkarte und einem dunklen Generator. Die drei skulpturalen Sicherheitsgrundpfeiler übernehmen die architektonische Formensprache des IT-Editorials.
+- Die stabilen Sprungziele sind `fernwartung`, `passwortcheck`, `passwortgenerator`, `security`, `backup` und `security-challenge`. Der Desktop-Header führt auf allen drei Seiten zu `it/#fernwartung`.
+- Fernwartung verwendet die offiziellen QuickSupport-Quellen für Windows (64 Bit) und macOS. Der früher verlinkte Download von `www.mosggo.ch/Mosggo-QS.exe` war in der Prüfung nicht erreichbar. Die lokale Originaldatei liegt getrennt vom öffentlichen Prototyp. Bei einem Wechsel auf das eigene QuickSupport-Modul zuerst den öffentlichen Link und die Modulkonfiguration prüfen.
+- `it.js` erzeugt Passwörter lokal mit `crypto.getRandomValues()`. Die Abtastung verwirft Zufallsbytes ausserhalb eines exakten Vielfachen der Alphabetgrösse und anschliessend vollständige Entwürfe mit fehlenden Kategorien. Kopieren erfolgt bewusst per Clipboard API. Der Generator räumt die Anzeige beim Verlassen der Seite auf.
+- Backup-Antworten, Spielstand und Phishing-Fundstellen leben im Arbeitsspeicher der aktuellen Seite. Die Simulation enthält nur anklickbare Texte mit reservierten `.example`-Adressen. Fragen, Hinweise, Ergebnis- und Fehlermeldungen stehen als HTML oder Templates bereit.
 
-- Die Seite unter `it/` nutzt den zentrierten Leistungshero. `data-atmosphere-switchable` aktiviert den optionalen Power-Zustand in `motion.js`. Der Schalter setzt `data-atmosphere-paused` und hält das Zeichenfeld an. Beim Einschalten startet das Feld wieder. Header, Footer und Seitentext bleiben bedienbar.
-- `it.css` nutzt gemeinsame Tokens und inszeniert Cloud und KI typografisch, die drei Schutzmassnahmen als Steinformen und die KI-These als Zeichenfolge, die auf beiden Seiten des Systems identisch ankommt. `it.js` steuert den Fortschritt nur für sichtbare Szenen anhand der nativen Scrollposition. Bei reduzierter Bewegung zeigt CSS statische Kompositionen.
-- Cheyenne-45 zeigt die Arbeit am Switch. Zwei responsive WebP-Kopien liegen in `assets/img/`. Die Ordner am Schluss können per Tastatur, Touch oder Maus geordnet werden. Absätze, Überschriften und Bedienelemente stehen für die spätere Übersetzung im HTML.
+### Passwortchecker und WordPress
+
+- `it/passwortcheck/index.html` ist ein eigenständiges Dokument mit einem einzigen CSP-gehashten Inline-Script. Die IT-Seite bettet es ohne `allow-same-origin` und mit `sandbox="allow-scripts"` ein. Das isoliert das Eingabefeld vom DOM der Hauptseite. Die einzige Nachricht an das Elternfenster enthält seine Layout-Höhe. Das Elternfenster prüft Quelle, opaque Origin und Wertebereich.
+- Ein bewusster Klick oder eine Tastaturaktivierung leert das Feld, setzt die Maskierung zurück und berechnet den Fingerabdruck lokal mit Web Crypto. SHA-1 ist hier das HIBP-Abfrageformat. Die einzige Abfrage geht als HTTPS-GET mit fünf Hex-Zeichen an `https://api.pwnedpasswords.com/range/` und verwendet `Add-Padding: true`, `credentials: "omit"`, `referrerPolicy: "no-referrer"`, `cache: "no-store"` und `redirect: "error"`. Ein CORS-Preflight ist möglich. Technische Metadaten wie IP-Adresse und Browserkennung fallen bei der Verbindung an.
+- Die Hash-Endung und der Treffervergleich bleiben im Frame. Nullzählungen gelten als Padding. Fehler und Zeitüberschreitung haben eigene Zustände. Neue Abfragen brechen vorherige ab, und nur die aktuelle Antwort darf die Oberfläche verändern. Das Tool führt keine Browser-Speicherung und kein Logging durch. Browser-Autofill-Hinweise mindern unbeabsichtigtes Speichern. Die tatsächliche Behandlung kann bei Erweiterungen und Passwortmanagern variieren.
+- Die CSP im Frame beginnt mit `default-src 'none'`. Sie erlaubt die gehashte Script-Version, lokale Inline-Stile und nur die HIBP-Range-Verbindung. Sie sperrt Formularübermittlung und Base-URL-Änderungen. Nach Änderungen am Script den SHA-256-Hash der exakten, mit LF normalisierten Zeichen zwischen `<script>` und `</script>` erneuern. HTML-Prozessoren müssen diesen Block bytegetreu ausliefern.
+- Für WordPress das Werkzeug als separat ausgeliefertes, schlankes Dokument erhalten, idealerweise auf einem dedizierten Origin mit eigener CSP als HTTP-Header und einer passenden `frame-ancestors`-Freigabe. Das Sandbox-Attribut im Elternfenster beibehalten. Analytics, Werbe-Scripts, Session Recordings und Plugins mit Formular- oder DOM-Zugriff aus dem Checker und seinem Einbettungsbereich heraushalten. Ein ungeprüftes Script im Elternfenster könnte trotz Sandbox die Oberfläche überlagern oder ersetzen. Nach jeder Integrationsänderung DOM-Isolation, CSP, Browser-Speicherung und Requests erneut prüfen.
+- Vor dem WordPress-Launch die Datenschutzerklärung um den Zweck, den externen Dienst, das Hash-Präfix und die beim HTTPS-Aufruf entstehenden technischen Metadaten ergänzen. Der direkt am Werkzeug platzierte Hinweis verweist auf Have I Been Pwned.
