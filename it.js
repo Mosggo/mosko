@@ -40,15 +40,13 @@
 })();
 
 (() => {
-  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!("IntersectionObserver" in window)) return;
 
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(entries => {
     for (const { target, isIntersecting } of entries) {
-      if (!isIntersecting) continue;
-      target.setAttribute("data-symbol-play", "");
-      observer.unobserve(target);
+      target.toggleAttribute("data-symbol-in-view", isIntersecting);
     }
-  }, { threshold: 0.55 });
+  });
   document.querySelectorAll("[data-pillar-symbol]").forEach(symbol => observer.observe(symbol));
 })();
 

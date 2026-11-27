@@ -75,55 +75,77 @@
 .it-pillar-chapter { min-inline-size: 0; }
 .it-pillar-symbol {
   display: block;
-  inline-size: clamp(var(--size-128), 18vw, 13rem);
+  inline-size: clamp(9rem, 25vw, 13rem);
   max-inline-size: 100%;
   block-size: auto;
   margin-block-end: var(--size-20);
+  font: 700 .6rem Consolas, ui-monospace, monospace;
 }
-.it-symbol-ink { fill: var(--primary-dark-1); }
-.it-symbol-earth { fill: var(--primary-dark-2); }
-.it-symbol-sand { fill: var(--primary-light-3); }
-.it-symbol-chili { fill: var(--primary-brand-1); }
+.it-bit-bed { fill: var(--primary-light-3); opacity: .58; }
+.it-bit-ink { fill: var(--primary-dark-1); }
+.it-bit-earth { fill: var(--primary-dark-2); }
+.it-bit-chili { fill: var(--primary-brand-1); }
+.it-bit-faint { opacity: .52; }
+.it-bit-signal, .it-bit-response, .it-bit-transfer { font-size: .72rem; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .it-pillar-symbol [class*="it-symbol-"] { transform-box: fill-box; transform-origin: center; }
-  .it-pillar-symbol[data-symbol-play] .it-symbol-pass { animation: it-symbol-pass 1.15s ease-out; }
-  .it-pillar-symbol[data-symbol-play] .it-symbol-blocked { animation: it-symbol-blocked 1.15s ease-out; }
-  .it-pillar-symbol[data-symbol-play] .it-symbol-deflect { animation: it-symbol-deflect 1.25s ease-in-out; }
-  .it-pillar-symbol[data-symbol-play] .it-symbol-response { animation: it-symbol-response 1.25s ease-in-out; }
-  .it-pillar-symbol[data-symbol-play] .it-symbol-copy { animation: it-symbol-copy 1.25s cubic-bezier(.24, .7, .27, 1); }
-  .it-pillar-symbol[data-symbol-play] .it-symbol-transit { animation: it-symbol-transit 1.15s ease-out; }
-}
-@keyframes it-symbol-pass {
-  from { transform: translateX(-69px); opacity: 0; }
-  23% { opacity: 1; }
-  to { transform: translateX(0); }
-}
-@keyframes it-symbol-blocked {
-  from { transform: translateX(-5px); }
-  43% { transform: translateX(6px); }
-  69% { transform: translateX(-4px); }
-  to { transform: translateX(0); }
-}
-@keyframes it-symbol-deflect {
-  from { transform: translate(6px, -4px); }
-  38% { transform: translate(-8px, 0); }
-  72% { transform: translate(5px, 2px); }
-  to { transform: translate(0); }
-}
-@keyframes it-symbol-response {
-  from, to { transform: scaleX(1); }
-  38% { transform: scaleX(.72); }
-  70% { transform: scaleX(1.12); }
-}
-@keyframes it-symbol-copy {
-  from { transform: translate(-105px, 32px); opacity: 0; }
-  18% { opacity: 1; }
-  to { transform: translate(0); }
-}
-@keyframes it-symbol-transit {
-  from { opacity: 0; }
-  40%, to { opacity: 1; }
+  .it-pillar-symbol {
+    --bit-cycle: 4.8s;
+    --bit-play: paused;
+  }
+  .it-pillar-symbol[data-symbol-in-view] { --bit-play: running; }
+  .it-bit-grid, .it-bit-trail, .it-bit-signal, .it-bit-response,
+  .it-bit-deflect, .it-bit-transfer, .it-bit-copy {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-duration: var(--bit-cycle);
+    animation-iteration-count: infinite;
+    animation-play-state: var(--bit-play);
+  }
+  .it-bit-grid { animation-name: it-bit-grid; animation-timing-function: ease-in-out; }
+  .it-bit-trail { animation-name: it-bit-trail; }
+  .it-bit-signal { animation-name: it-bit-signal; animation-timing-function: linear; }
+  .it-bit-response { animation-name: it-bit-response; }
+  .it-bit-deflect { animation-name: it-bit-deflect; }
+  .it-bit-transfer { animation-name: it-bit-transfer; animation-timing-function: linear; }
+  .it-bit-copy { animation-name: it-bit-copy; }
+  @keyframes it-bit-grid {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+  @keyframes it-bit-trail {
+    0%, 100% { transform: translateX(0); opacity: .72; }
+    38% { transform: translateX(10px); opacity: 1; }
+    56% { transform: translateX(-5px); opacity: .54; }
+    82% { transform: translateX(-2px); }
+  }
+  @keyframes it-bit-signal {
+    0%, 100% { transform: translateX(-94px); opacity: 0; }
+    12% { opacity: 1; }
+    70% { transform: translateX(24px); opacity: 1; }
+    82% { transform: translateX(36px); opacity: 0; }
+  }
+  @keyframes it-bit-response {
+    0%, 100% { transform: scale(1); opacity: .7; }
+    42% { transform: scale(1.22); opacity: 1; }
+    72% { transform: scale(.93); opacity: .58; }
+  }
+  @keyframes it-bit-deflect {
+    0%, 100% { transform: translate(3px, 0); opacity: .67; }
+    36% { transform: translate(-13px, -2px); opacity: 1; }
+    67% { transform: translate(8px, 3px); opacity: .51; }
+  }
+  @keyframes it-bit-transfer {
+    0%, 100% { transform: translate(-30px, 11px); opacity: 0; }
+    18% { opacity: 1; }
+    70% { transform: translate(24px, -12px); opacity: 1; }
+    81% { transform: translate(31px, -15px); opacity: 0; }
+  }
+  @keyframes it-bit-copy {
+    0%, 100% { opacity: .72; }
+    59% { opacity: .78; }
+    81% { opacity: 1; }
+  }
 }
 
 .it-page [hidden] { display: none !important; }
