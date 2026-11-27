@@ -11,11 +11,10 @@
   <link rel="preload" href="../assets/fonts/stack-sans-headline.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../assets/fonts/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="../styles.css?v=about-field">
-  <link rel="stylesheet" href="../about.css">
+  <link rel="stylesheet" href="../about.css?v=editorial-v2">
   <script src="../scenes.js" defer></script>
   <script src="../motion.js?v=mobile-curtain" defer></script>
   <script src="../language.js" defer></script>
-  <script src="../about.js" defer></script>
 </head>
 <body class="about-page" id="start" data-native-scroll>
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
@@ -62,11 +61,11 @@
         <p class="body-m body-on-dark">Ein Mensch mit ziemlich vielen Interessen, eigenen Vorstellungen und der Angewohnheit, mir immer wieder etwas Neues beizubringen.</p>
       </div>
       <figure class="about-hero-photo">
-        <img src="../assets/img/about-cheyenne-hero-960.webp"
-          srcset="../assets/img/about-cheyenne-hero-560.webp 560w, ../assets/img/about-cheyenne-hero-960.webp 960w"
+        <img src="../assets/img/about-cheyenne-hero17-960.webp"
+          srcset="../assets/img/about-cheyenne-hero17-560.webp 560w, ../assets/img/about-cheyenne-hero17-960.webp 960w"
           sizes="(max-width: 41.99rem) 90vw, (max-width: 90rem) 48vw, 690px"
           width="960" height="1200" fetchpriority="high"
-          alt="Cheyenne lächelt in einem hellen Blazer und blickt zur Seite.">
+          alt="Cheyenne lächelt in einem dunklen Blazer und blickt nach links.">
       </figure>
     </section>
 
@@ -77,17 +76,24 @@
       </header>
       <div class="about-path-spread">
         <div class="about-path-text body-l body-on-light">
-          <p><time class="about-year" datetime="2011">2011</time> habe ich meine Lehre in der Informatik begonnen. Schon damals hatte ich viel Freiraum, mich mit den Dingen zu beschäftigen, die mich interessierten, auszuprobieren und eigene Lösungen zu finden.</p>
-          <p>Ich habe gelernt, mir Wissen selbst anzueignen. Und vor allem habe ich gelernt, was es bedeutet, Dienstleisterin zu sein.</p>
-          <p>Nach einigen Jahren im Beruf hatte ich zunehmend eigene Vorstellungen davon, wie ich arbeiten und mich weiterentwickeln wollte.</p>
-          <p><time class="about-year" datetime="2023">2023</time> habe ich den Schritt in die Selbstständigkeit gewagt.</p>
+          <div class="about-milestone">
+            <p><time class="about-year" datetime="2011">2011</time> habe ich meine Lehre in der Informatik begonnen. Schon damals hatte ich viel Freiraum, mich mit den Dingen zu beschäftigen, die mich interessierten, auszuprobieren und eigene Lösungen zu finden.</p>
+            <p>Ich habe gelernt, mir Wissen selbst anzueignen. Und vor allem habe ich gelernt, was es bedeutet, Dienstleisterin zu sein.</p>
+          </div>
+          <div class="about-milestone">
+            <p><time class="about-year" datetime="2015">2015</time> habe ich meine Lehre abgeschlossen und anschliessend weiterhin Unternehmen in ihrer IT betreut.</p>
+            <p>Nach einigen Jahren im Beruf hatte ich zunehmend eigene Vorstellungen davon, wie ich arbeiten und mich weiterentwickeln wollte.</p>
+          </div>
+          <div class="about-milestone">
+            <p><time class="about-year" datetime="2023">2023</time> habe ich den Schritt in die Selbstständigkeit gewagt.</p>
+          </div>
         </div>
         <figure class="about-path-photo">
-          <img src="../assets/img/about-cheyenne-path-840.webp"
-            srcset="../assets/img/about-cheyenne-path-500.webp 500w, ../assets/img/about-cheyenne-path-840.webp 840w"
+          <img src="../assets/img/about-cheyenne-path32-840.webp"
+            srcset="../assets/img/about-cheyenne-path32-500.webp 500w, ../assets/img/about-cheyenne-path32-840.webp 840w"
             sizes="(max-width: 41.99rem) 85vw, (max-width: 90rem) 44vw, 640px"
             width="840" height="672" loading="lazy" decoding="async"
-            alt="Cheyenne sitzt seitlich an einem Schreibtisch mit Tastatur und Monitoren.">
+            alt="Cheyenne lächelt mit Kopfhörern und stützt das Kinn auf ihre Hände.">
         </figure>
       </div>
       <p class="about-path-statement title-3 heading-on-light"><strong>Ich wollte nicht unbedingt etwas anderes machen. <span>Ich wollte es auf meine Art machen.</span></strong></p>
@@ -111,73 +117,57 @@
         </div>
       </div>
       <div class="about-worlds-close flex-column gap-12 body-l body-on-light">
-        <p>Heute sind <strong>Webdesign</strong> und <strong>IT</strong> zwei feste Bestandteile meiner Arbeit.</p>
+        <p><strong class="about-today">Heute</strong> sind <strong>Webdesign</strong> und <strong>IT</strong> zwei feste Bestandteile meiner Arbeit.</p>
         <p>Und zum Glück muss ich mich nicht zwischen ihnen entscheiden.</p>
       </div>
     </section>
 
-    <section class="about-brand boxed-l pad-tb-128" aria-labelledby="about-brand-title">
-      <header class="about-heading flex-column gap-16">
-        <p class="sub-title subtitle-on-dark" lang="en">Becoming Mosko.</p>
-        <h2 class="title-2 heading-on-dark" id="about-brand-title">Drei Jahre später. Ein K statt zwei G.</h2>
+    <section class="about-brand boxed-l pad-tb-48 bg-light-2" aria-labelledby="about-brand-title">
+      <header class="about-heading flex-column gap-12">
+        <p class="sub-title subtitle-on-light" lang="en">Becoming Mosko.</p>
+        <h2 class="title-4 heading-on-light" id="about-brand-title">Drei Jahre später. Ein K statt zwei G.</h2>
       </header>
-      <div class="about-brand-copy body-l body-on-dark">
-        <div class="flex-column gap-20">
-          <p>Wer mich schon etwas länger kennt, kennt mich vielleicht noch unter dem Namen Mosggo.</p>
-          <p>Warum zwei G? Weil ich es damals witzig fand.</p>
-          <p>Einen tieferen Grund gab es tatsächlich nicht. =)</p>
-        </div>
-        <div class="flex-column gap-20">
-          <p>Seitdem habe ich einiges über Gestaltung, Marketing und die Bedeutung einer eigenen Identität gelernt.</p>
-          <p>MOSKO. ist für mich deshalb weniger ein Rebranding als vielmehr die Entstehung meiner ersten richtigen Marke.</p>
-          <p>Eine Marke, die nicht einfach meinen Geschmack widerspiegelt, sondern meine Haltung, meine Arbeit und das, was mir dabei wichtig ist.</p>
-        </div>
+      <div class="about-brand-copy flex-column gap-12 body-m body-on-light">
+        <p>Wer mich schon etwas länger kennt, kennt mich vielleicht noch unter dem Namen Mosggo.</p>
+        <p>Warum zwei G? Weil ich es damals witzig fand. =)</p>
+        <p>MOSKO. ist für mich weniger ein Rebranding als vielmehr die Entstehung meiner ersten richtigen Marke.</p>
       </div>
-      <div class="about-brand-stage" data-brand-stage aria-hidden="true">
-        <p class="about-name about-name-static">Mosggo <span>→</span></p>
-        <div class="about-name about-name-moving">
-          <span>M</span><span>O</span><span>S</span><span class="brand-g brand-g-first">G</span><span class="brand-g brand-g-second">G</span><span class="brand-o">O</span>
-          <span class="brand-k">K</span>
-        </div>
-        <img class="about-brand-logo" src="../assets/img/mosko-leinen.svg" width="1500" height="288" alt="" loading="lazy" decoding="async">
-      </div>
-      <p class="about-brand-claim title-4 heading-on-dark" lang="en"><strong>Digital on Point.</strong></p>
     </section>
 
-    <section class="about-values boxed-l pad-tb-128 bg-light-2" aria-labelledby="about-values-title">
+    <section class="about-values boxed-l pad-tb-128" aria-labelledby="about-values-title">
       <header class="about-heading flex-column gap-16">
-        <p class="sub-title subtitle-on-light" lang="en">What Matters.</p>
-        <h2 class="title-2 heading-on-light" id="about-values-title">Drei Dinge, die mir wichtig sind.</h2>
+        <p class="sub-title subtitle-on-dark" lang="en">What Matters.</p>
+        <h2 class="title-2 heading-on-dark" id="about-values-title">Drei Dinge, die mir wichtig sind.</h2>
       </header>
       <div class="about-values-list">
         <article>
-          <h3 class="heading-on-light">Vertrauen.</h3>
-          <p class="body-l body-on-light">Ehrlich miteinander umgehen. Sich aufeinander verlassen können. Und auch mal sagen dürfen, wenn man etwas nicht weiss.</p>
+          <h3 class="heading-on-dark">Vertrauen.</h3>
+          <p class="body-l body-on-dark">Ehrlich miteinander umgehen. Sich aufeinander verlassen können. Und auch mal sagen dürfen, wenn man etwas nicht weiss.</p>
         </article>
         <article>
-          <h3 class="heading-on-light">Wohlwollen.</h3>
-          <p class="body-l body-on-light">Wir müssen nicht immer derselben Meinung sein. Aber wir können versuchen, die Dinge auch mal aus der Perspektive unseres Gegenübers zu sehen.</p>
+          <h3 class="heading-on-dark">Wohlwollen.</h3>
+          <p class="body-l body-on-dark">Wir müssen nicht immer derselben Meinung sein. Aber wir können versuchen, die Dinge auch mal aus der Perspektive unseres Gegenübers zu sehen.</p>
         </article>
         <article>
-          <h3 class="heading-on-light">Mut zur Entwicklung.</h3>
-          <p class="body-l body-on-light">Neugierig bleiben. Die eigenen Überzeugungen hinterfragen. Und sich die Freiheit nehmen, Dinge morgen anders zu sehen als heute.</p>
+          <h3 class="heading-on-dark">Mut zur Entwicklung.</h3>
+          <p class="body-l body-on-dark">Neugierig bleiben. Die eigenen Überzeugungen hinterfragen. Und sich die Freiheit nehmen, Dinge morgen anders zu sehen als heute.</p>
         </article>
       </div>
     </section>
 
-    <section class="about-quote boxed-l pad-tb-128" aria-labelledby="about-quote-title">
+    <section class="about-quote boxed-l pad-tb-96 bg-light-1" aria-labelledby="about-quote-title">
       <figure class="about-quote-copy flex-column gap-24">
-        <p class="sub-title subtitle-on-dark" lang="en">My Definition of Success.</p>
+        <p class="sub-title subtitle-on-light" lang="en">My Definition of Success.</p>
         <blockquote>
-          <h2 class="heading-on-dark" id="about-quote-title">Erfolg ist für mich, wenn man am Freitag nicht die Minuten zählt bis zum Wochenende und keinen Sonntagsblues hat, weil man montags wieder arbeiten muss.</h2>
+          <h2 class="heading-on-light" id="about-quote-title">Erfolg ist für mich, wenn man am Freitag nicht die Minuten zählt bis zum Wochenende und keinen Sonntagsblues hat, weil man montags wieder arbeiten muss.</h2>
         </blockquote>
-        <figcaption class="body-m body-on-dark"><time datetime="2024-07">Juli 2024.</time></figcaption>
+        <figcaption class="body-m body-on-light"><time datetime="2024">2024</time> – Meine Erkenntnis nach einem Jahr Selbstständigkeit.</figcaption>
       </figure>
     </section>
 
     <section class="about-offline boxed-l pad-tb-96 bg-light-2" aria-labelledby="about-offline-title">
+      <p class="about-offline-label" lang="en">OFFLINE<span>.</span></p>
       <div class="about-offline-copy flex-column gap-20">
-        <p class="sub-title subtitle-on-light" lang="en">Offline.</p>
         <h2 class="title-3 heading-on-light" id="about-offline-title">Geboren in Miami. Aufgewachsen in Graubünden.</h2>
         <div class="flex-column gap-16 body-m body-on-light">
           <p>Wenn ich nicht gerade vor einem Bildschirm sitze, zieht es mich gerne mal unter die Wasseroberfläche. Vorzugsweise irgendwo, wo das Wasser etwas wärmer ist als bei uns.</p>
@@ -187,13 +177,16 @@
       </div>
       <div class="about-collage">
         <figure class="about-slot about-slot-dive" data-wp-slot="offline-tauchen">
-          <figcaption class="body-s">Bildplatzhalter · Tauchen</figcaption>
+          <img src="../assets/img/about-offline-tauchen.webp" width="740" height="592" loading="lazy" decoding="async"
+            alt="Cheyenne taucht mit Maske und Tauchflasche im blauen Wasser.">
         </figure>
         <figure class="about-slot about-slot-racing" data-wp-slot="offline-motorsport">
-          <figcaption class="body-s">Bildplatzhalter · Motorsport</figcaption>
+          <img src="../assets/img/about-offline-motorsport.webp" width="690" height="365" loading="lazy" decoding="async"
+            alt="Ein weisser Rennwagen fährt auf einer Strasse an einer Steinmauer entlang.">
         </figure>
         <figure class="about-slot about-slot-horses" data-wp-slot="offline-pferde">
-          <figcaption class="body-s">Bildplatzhalter · Pferde</figcaption>
+          <img src="../assets/img/about-offline-pferde.webp" width="520" height="780" loading="lazy" decoding="async"
+            alt="Cheyenne reitet bei Sonnenuntergang auf einem weissen Pferd über sandigen Boden.">
         </figure>
       </div>
     </section>
