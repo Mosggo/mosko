@@ -4,7 +4,7 @@
   display: grid;
   align-items: center;
   min-block-size: clamp(25rem, 48svh, 32rem);
-  padding-block: max(7rem, calc(var(--nav-top) + 4.5rem)) var(--size-64);
+  padding-block: max(8.5rem, calc(var(--nav-top) + 5rem)) var(--size-64);
 }
 .contact-hero-copy { max-inline-size: 42rem; }
 .contact-hero-copy h1 { max-inline-size: 16ch; text-wrap: balance; }
@@ -105,7 +105,7 @@
 @media (max-width: 44rem) {
   .contact-hero {
     min-block-size: auto;
-    padding-block: max(6rem, calc(var(--nav-top) + 4.25rem)) var(--size-32);
+    padding-block: max(6.5rem, calc(var(--nav-top) + 4.75rem)) var(--size-32);
   }
   .contact-hero-copy { gap: var(--size-16); }
   .contact-hero .atmosphere--light {

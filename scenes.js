@@ -203,7 +203,7 @@
         const touch = pointerWeight(pointer, x, y, reach);
         const drift = 0.5 + 0.5 * Math.sin(seconds * 0.62 + x * 0.003 - y * 0.005 + phase);
         const opacity = (idle ? 0 : 0.038 + tone * 0.11 + drift * 0.036 + touch * (0.065 + motion * 0.10)) + energy * 0.32;
-        const motifAlpha = motif ? 0.12 + tone * 0.095 : 0;
+        const motifAlpha = motif ? 0.142 + tone * 0.105 : 0;
         const ambient = hasHello && !motif ? opacity * .55 : opacity;
         ctx.globalAlpha = clamp((ambient + motifAlpha) * gain) * visibility;
         const nx = x + touch * Math.cos(phase) * (1.6 + motion * 3.4) + energy * Math.sin(phase) * 4
