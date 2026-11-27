@@ -40,6 +40,19 @@
 })();
 
 (() => {
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    for (const { target, isIntersecting } of entries) {
+      if (!isIntersecting) continue;
+      target.setAttribute("data-symbol-play", "");
+      observer.unobserve(target);
+    }
+  }, { threshold: 0.55 });
+  document.querySelectorAll("[data-pillar-symbol]").forEach(symbol => observer.observe(symbol));
+})();
+
+(() => {
   const generator = document.querySelector("[data-password-generator]");
   if (!window.crypto?.getRandomValues) {
     document.querySelector("[data-generator-unavailable]").hidden = false;
