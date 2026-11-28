@@ -16,7 +16,7 @@
   <script src="../scenes.js" defer></script>
   <script src="../motion.js?v=curtain-size" defer></script>
   <script src="../language.js" defer></script>
-  <script src="../it-challenge-data.js" defer></script>
+  <script src="../it-challenge-data.js?v=update-answer" defer></script>
   <script src="../it.js?v=it-mobile" defer></script>
 </head>
 <body class="service-page it-page" id="start" data-native-scroll>
@@ -79,12 +79,11 @@
     <section class="it-intro it-split boxed-l bg-light-2 pad-tb-128" aria-labelledby="it-intro-title">
       <header class="flex-column gap-20">
         <p class="sub-title subtitle-on-light" lang="en">Make It Simple.</p>
-        <h2 class="title-2 heading-on-light" id="it-intro-title">Technik soll dir das Leben einfacher machen.</h2>
+        <h2 class="title-2 heading-on-light" id="it-intro-title">Es geht meistens auch einfacher.</h2>
       </header>
       <div class="it-prose body-l body-on-light flex-column gap-20">
         <p>Ob am Arbeitsplatz, unterwegs oder zu Hause. Ob etwas nicht mehr funktioniert, du eine Frage hast oder wissen möchtest, welche Möglichkeiten es gibt.</p>
         <p>Du musst weder die Ursache kennen noch wissen, wie die passende Lösung heisst.</p>
-        <p class="it-emphasis"><strong>Wieso kompliziert, wenn es auch einfach geht?</strong></p>
       </div>
     </section>
 
@@ -140,13 +139,17 @@
             <a href="#passwortgenerator" aria-controls="passwort-erstellen">Passwort generieren</a>
           </nav>
           <div class="it-password-panel" id="passwort-pruefen">
-            <div class="it-privacy body-s body-on-dark">
-              <p>Bei der Prüfung gehen nur die ersten fünf Zeichen des lokal berechneten Passwort-Hashs an Have I Been Pwned. Verwende eine Passwortidee statt deiner aktuellen Zugangsdaten.</p>
+            <div class="it-privacy flex-column gap-8 body-s body-on-dark">
+              <p>Bei Datendiebstählen gelangen immer wieder Millionen von Passwörtern ins Internet. Solche Passwortsammlungen werden unter anderem von Angreifern genutzt, um Zugang zu Benutzerkonten zu erlangen.</p>
+              <p>Mit diesem Tool kannst du herausfinden, ob eine Passwortidee bereits in bekannten Datendiebstählen aufgetaucht ist.</p>
+              <p>Nicht gefunden? Das ist ein gutes Zeichen, aber noch keine Garantie für ein sicheres Passwort.</p>
               <details>
                 <summary>Datenschutz zur Passwortprüfung</summary>
-                <p><strong>Dein Passwort bleibt dein Geheimnis.</strong> Dein vollständiges Passwort und der vollständige Hash bleiben in deinem Browser. Das Tool speichert sie nicht. Bei der HTTPS-Abfrage erhält der externe Dienst technische Metadaten wie die IP-Adresse.</p>
+                <p><strong>Dein Passwort bleibt dein Geheimnis.</strong> Dein vollständiges Passwort und der vollständige Hash bleiben in deinem Browser. Das Tool speichert sie nicht.</p>
+                <p>Bei der Prüfung gehen nur die ersten fünf Zeichen des lokal berechneten Passwort-Hashs an Have I Been Pwned. Bei der HTTPS-Abfrage erhält der Dienst technische Metadaten wie die IP-Adresse.</p>
                 <p><a class="it-plain-link" href="https://haveibeenpwned.com/Passwords" rel="noreferrer" lang="en">Powered by Have I Been Pwned.</a></p>
               </details>
+              <p>Verwende eine Passwortidee statt deiner aktuellen Zugangsdaten.</p>
             </div>
             <iframe src="passwortcheck/" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Isolierter Passwortchecker" height="88" data-password-frame></iframe>
           </div>

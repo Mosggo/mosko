@@ -103,7 +103,7 @@ const moskoChallenge = {
       question: "Für deinen Computer steht ein Sicherheitsupdate bereit. Momentan funktioniert alles einwandfrei. Was ist sinnvoll?",
       answers: {
         a: "Das Update zeitnah zu einem geeigneten Zeitpunkt installieren.",
-        b: "Warten, bis erste technische Probleme auftreten.",
+        b: "Never change a running system.",
         c: "Darauf verzichten, solange der Virenschutz aktuell ist.",
       },
       correct: "a",
